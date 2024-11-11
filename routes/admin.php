@@ -5,7 +5,7 @@
 // use App\Http\Controllers\admin\DashboardController;
 // use App\Http\Controllers\admin\DoctorController;
 // use App\Http\Controllers\admin\MajorController;
-// use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route;
 
 
 // Route::prefix('admin/')->as('admin.')->group(function () {
@@ -21,3 +21,7 @@
 //     Route::post('login', [LoginController::class, 'authentication'])->name('auth.login');
 
 // });
+
+Route::get('dashboard', function () {
+    return view('admin.pages.home');
+});

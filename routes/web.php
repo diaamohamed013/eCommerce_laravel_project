@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('site.pages.shopping_cart');
+    return view('site.pages.home');
 });
 
-require_once 'admin.php';
+// require_once 'admin.php';
