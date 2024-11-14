@@ -10,11 +10,11 @@
         </div>
 
         <!-- Navbar -->
-        {{-- @include('admin.layouts.navbar') --}}
+        @include('admin.layouts.navbar')
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        {{-- @include('admin.layouts.sidebar') --}}
+        @include('admin.layouts.sidebar')
 
         <!-- Content Wrapper. Contains page content -->
         @yield('admin-content')
