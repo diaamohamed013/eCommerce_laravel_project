@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Site\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,8 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('site.pages.shopping_cart');
-});
+// Route::get('/', function () {
+//     return view('site.pages.home');
+// });
 
-require_once 'admin.php';
+// require_once 'admin.php';
+
+Auth::routes();
+Route::as('site.')->group(function(){
+    Route::middleware('auth')->group(function(){
+
+    });
+    Route::get('/',[HomeController::class,'index'])->name('home');
+    Route::get('home', [HomeController::class, 'index'])->name('home');
+    Route::get('forbidden', [HomeController::class, 'inCorrectRole'])->name('forbidden');
+});

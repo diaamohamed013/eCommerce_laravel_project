@@ -609,6 +609,7 @@ header .nav1 .navList {
 
 header .nav1 .nav-item1 {
     border-right: .25px solid #3b3b3b;
+    white-space: nowrap;
 }
 
 header .nav1 .depart {
@@ -737,11 +738,11 @@ header nav .nav-item1:hover .collList {
     padding: 15px 30px !important;
 }
 
-.nav-item:first-child {
+.nav-item:first-child:not(.navbarTop .nav-item) {
     padding-top: 20px !important;
 }
 
-.nav-item:last-child {
+.nav-item:last-child:not(.navbarTop .nav-item) {
     padding-bottom: 20px !important;
 }
 
@@ -755,6 +756,12 @@ header nav .nav-item1:hover .collList {
 
 .navbar-nav .nav-item .nav-link:hover, .navbar-light .navbar-nav .nav-link:focus {
     color: #e7ab3c !important;
+}
+
+.navbarTop .nav-item .nav-link {
+    color: #333;
+    padding: 8px;
+    font-weight: 600;
 }
 
 .right
@@ -2511,7 +2518,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 /* this styling for checkmark and radio input
-in checout page , login page and shop page  */
+in CheckOut page , login page and shop page  */
 .checkorder .orderTotal .payment label, .checkorder .details .creat label, .shop .brand-item .item label, .shop .color-item .item label, .loginForm .check label {
     position: relative;
     padding-left: 32px;
@@ -3228,8 +3235,16 @@ button:focus {
         flex: 0 0 30% !important;
     }
 
-    .topHead1 .col-md-6 {
+    /* .topHead1 .col-md-6 {
         display: none;
+    } */
+
+    .fashiPhone i {
+        display: none;
+    }
+
+    .fashiPhone span {
+        white-space: nowrap;
     }
 
     .contact .itemTxt p {

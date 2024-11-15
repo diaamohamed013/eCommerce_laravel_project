@@ -15,11 +15,11 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <form method="POST" action="{{route('admin.auth.logout')}}">
             @csrf
             <button type="submit" class="btn btn-info">Logout</button>
         </form>
-      </li>
+      </li> --}}
     </ul>
   </nav>
