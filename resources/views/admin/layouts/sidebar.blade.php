@@ -26,21 +26,27 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="{{ route('admin.dashboard') }}" class="nav-link active">
+                    <a href="{{ route('admin.dashboard') }}" class="nav-link @if(request()->is('dashboard*')) active @endif">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Dashboard v1</p>
+                        <p>Dashboard</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.majors.index') }}" class="nav-link">
+                    <a href="{{ url('roles') }}" class="nav-link @if(request()->is('roles*')) active @endif">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Majors</p>
+                        <p>Roles</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.doctors.index') }}" class="nav-link">
+                    <a href="{{ url('permissions') }}" class="nav-link @if(request()->is('permission*')) active @endif">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Doctors</p>
+                        <p>Permissions</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url('users') }}" class="nav-link @if(request()->is('users*')) active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Users</p>
                     </a>
                 </li>
             </ul>

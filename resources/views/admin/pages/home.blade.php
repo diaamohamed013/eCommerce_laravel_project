@@ -6,7 +6,7 @@
 
 @section('admin-content')
     <div class="content-wrapper">
-        {{-- @include('admin.layouts.breadcrumb') --}}
+        @include('admin.layouts.breadcrumb')
 
         <!-- Main content -->
         <section class="content">

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Fashi | @yield('title')</title>
     <link rel="icon" href="{{ asset('site/img/filled_bow_tie_40px.png') }}">
     <link rel="stylesheet" href="{{ asset('site/css/bootstrap.min.css') }}">
