@@ -22,8 +22,8 @@ class AdminMiddleware
             if ($user->hasRole(['super-admin', 'admin'])) {
                 return $next($request);
             }
-            return redirect()->route('site.forbidden');
             // abort(403, 'User Does Not Have Correct Roles');
         }
+        return redirect()->route('site.forbidden');
     }
 }
