@@ -1,8 +1,8 @@
 @extends('admin.master')
 
-@section('title', 'Categories')
+@section('title', 'Brands')
 
-@section('headerPage', 'Categories')
+@section('headerPage', 'Brands')
 
 @section('admin-content')
     <div class="content-wrapper">
@@ -20,9 +20,9 @@
 
                         <div class="card mt-3">
                             <div class="card-header">
-                                <h4>Categories
-                                        <a href="{{route('categories.create')}}" class="btn btn-primary float-end">Add
-                                            Category</a>
+                                <h4>Brands
+                                        <a href="{{route('brands.create')}}" class="btn btn-primary float-end">Add
+                                            Brand</a>
                                 </h4>
                             </div>
                             <div class="card-body">
@@ -37,19 +37,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($categories as $category)
+                                        @foreach ($brands as $brand)
                                             <tr>
-                                                <td>{{ $category->id }}</td>
-                                                <td>{{ $category->name }}</td>
+                                                <td>{{ $brand->id }}</td>
+                                                <td>{{ $brand->name }}</td>
                                                 <td>
-                                                    <img class="img-fluid" style="width: 90px;" src="{{ $category->image }}" alt="{{ $category->name }}">
+                                                    <img class="img-fluid" style="width: 90px;" src="{{ $brand->image }}" alt="{{ $brand->name }}">
                                                 </td>
                                                 <td>
-                                                        <a href="{{ route('categories.edit', $category->id) }}"
+                                                        <a href="{{ route('brands.edit', $brand->id) }}"
                                                             class="btn btn-success">Edit</a>
                                                         <!-- <a href=""
                                                             class="btn btn-danger mx-2">Delete</a> -->
-                                                        <form action="{{ route('categories.destroy', $category->id) }}"
+                                                        <form action="{{ route('brands.destroy', $brand->id) }}"
                                                             method="POST" class="d-inline">
                                                             @csrf
                                                             @method('DELETE')

@@ -5,8 +5,10 @@
 // use App\Http\Controllers\admin\DashboardController;
 // use App\Http\Controllers\admin\DoctorController;
 // use App\Http\Controllers\admin\MajorController;
+
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\ProductController;
+use App\Models\Brand;
 use Illuminate\Support\Facades\Route;
 
 
@@ -52,5 +54,5 @@ Route::group(['middleware' => ['isAdmin']], function () {
     // Route::post('categories', [CategoryController::class, 'store'])->name('categories.store');
 
     Route::resource('categories', CategoryController::class);
-    Route::resource('products', ProductController::class);
+    Route::resource('brands', BrandController::class);
 });

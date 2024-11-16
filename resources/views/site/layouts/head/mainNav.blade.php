@@ -38,7 +38,7 @@
                 <a class="nav-link" href="{{ route('site.home') }}">HOME <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item1">
-                <a class="nav-link" href="shop.html">SHOP</a>
+                <a class="nav-link" href="{{ route('site.shop') }}">SHOP</a>
             </li>
             <li class="nav-item1">
                 <a class="nav-link" href="#">COLLECTION</a>

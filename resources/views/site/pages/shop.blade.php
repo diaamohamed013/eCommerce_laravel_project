@@ -18,15 +18,11 @@
                             categories
                         </h4>
                         <ul>
+                            @foreach ($categories as $category)
                             <li>
-                                <a href="#">men</a>
+                                <a href="#">{{ $category->name }}</a>
                             </li>
-                            <li>
-                                <a href="#">women</a>
-                            </li>
-                            <li>
-                                <a href="#">kids</a>
-                            </li>
+                            @endforeach
                         </ul>
                     </div>
                     <div class="shop-brand">
@@ -34,34 +30,15 @@
                             brand
                         </h4>
                         <div class="brand-item">
+                            @foreach ($brands as $brand) 
                             <div class="item">
                                 <label for="calvin">
-                                    calvin klein
+                                    {{ $brand->name }}
                                     <input type="checkbox" id="calvin">
                                     <span></span>
                                 </label>
-                            </div>
-                            <div class="item">
-                                <label for="diesel">
-                                    diesel
-                                    <input type="checkbox" id="diesel">
-                                    <span></span>
-                                </label>
-                            </div>
-                            <div class="item">
-                                <label for="polo">
-                                    polo
-                                    <input type="checkbox" id="polo">
-                                    <span></span>
-                                </label>
-                            </div>
-                            <div class="item">
-                                <label for="tommy">
-                                    tommy hilfiger
-                                    <input type="checkbox" id="tommy">
-                                    <span></span>
-                                </label>
-                            </div>
+                            </div>  
+                            @endforeach
                         </div>
                     </div>
                     <div class="shop-price">
