@@ -82,7 +82,7 @@
                         @csrf
                         <div class="row">
                             <div class="col-12">
-                                @include('site.inc.success')
+                                @include('inc.success')
                             </div>
                             <div class="col-lg-6 col-md-12">
                                 <input type="text" placeholder="Your Name" name="name" class="mb-0">

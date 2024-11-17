@@ -26,27 +26,35 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="{{ route('admin.dashboard') }}" class="nav-link @if(request()->is('dashboard*')) active @endif">
-                        <i class="far fa-circle nav-icon"></i>
+                    <a href="{{ route('admin.dashboard') }}"
+                        class="nav-link @if (request()->is('dashboard*')) active @endif">
+                        <i class="fas fa-chart-pie nav-icon"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('roles') }}" class="nav-link @if(request()->is('roles*')) active @endif">
-                        <i class="far fa-circle nav-icon"></i>
+                    <a href="{{ url('roles') }}" class="nav-link @if (request()->is('roles*')) active @endif">
+                        <i class="fas fa-thumbtack nav-icon"></i>
                         <p>Roles</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('permissions') }}" class="nav-link @if(request()->is('permission*')) active @endif">
-                        <i class="far fa-circle nav-icon"></i>
+                    <a href="{{ url('permissions') }}" class="nav-link @if (request()->is('permission*')) active @endif">
+                        <i class="far fa-bookmark nav-icon"></i>
                         <p>Permissions</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('users') }}" class="nav-link @if(request()->is('users*')) active @endif">
-                        <i class="far fa-circle nav-icon"></i>
+                    <a href="{{ url('users') }}" class="nav-link @if (request()->is('users*')) active @endif">
+                        <i class="fas fa-users nav-icon"></i>
                         <p>Users</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.message.show') }}"
+                        class="nav-link @if (request()->is('messages*')) active @endif">
+                        <i class="fas fa-envelope nav-icon"></i>
+                        <p>Messages</p>
                     </a>
                 </li>
             </ul>
