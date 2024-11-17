@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
@@ -24,4 +26,7 @@ Route::group(['middleware' => ['isAdmin']], function () {
 
     Route::get('messages', [ContactController::class, 'index'])->name('admin.message.show');
     Route::delete('messages/{messageId}', [ContactController::class, 'destroy'])->name('admin.message.destroy');
+
+    Route::resource('categories', CategoryController::class);
+    Route::resource('brands', BrandController::class);
 });
