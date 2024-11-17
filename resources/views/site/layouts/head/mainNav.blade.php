@@ -61,14 +61,14 @@
                 </ul>
             </li>
             <li class="nav-item1 ">
-                <a class="nav-link" href="contact.html">CONTACT</a>
+                <a class="nav-link" href="{{route('site.contact')}}">CONTACT</a>
             </li>
             @auth
                 <li class="nav-item1 ">
-                    <a class="nav-link" href="contact.html">Shopping Cart</a>
+                    <a class="nav-link" href="">Shopping Cart</a>
                 </li>
                 <li class="nav-item1 ">
-                    <a class="nav-link" href="contact.html">CheckOut</a>
+                    <a class="nav-link" href="">CheckOut</a>
                 </li>
             @endauth
             @if (Auth::check() && Auth::user()->hasRole(['super-admin', 'admin']))

@@ -27,5 +27,7 @@ Route::as('site.')->group(function(){
     });
     Route::get('/',[HomeController::class,'index'])->name('home');
     Route::get('home', [HomeController::class, 'index'])->name('home');
+    Route::get('contact-us', [HomeController::class, 'contact'])->name('contact');
+    Route::post('contact-us', [HomeController::class, 'sendMessage'])->name('contact.store');
     Route::get('forbidden', [HomeController::class, 'inCorrectRole'])->name('forbidden');
 });
