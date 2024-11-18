@@ -21,7 +21,7 @@
                         <div class="card mt-3">
                             <div class="card-header">
                                 <h4>Brands
-                                        <a href="{{route('brands.create')}}" class="btn btn-primary float-end">Add
+                                        <a href="{{route('admin.brands.create')}}" class="btn btn-primary float-end">Add
                                             Brand</a>
                                 </h4>
                             </div>
@@ -45,11 +45,11 @@
                                                     <img class="img-fluid" style="width: 90px;" src="{{ $brand->image }}" alt="{{ $brand->name }}">
                                                 </td>
                                                 <td>
-                                                        <a href="{{ route('brands.edit', $brand->id) }}"
+                                                        <a href="{{ route('admin.brands.edit', $brand->id) }}"
                                                             class="btn btn-success">Edit</a>
                                                         <!-- <a href=""
                                                             class="btn btn-danger mx-2">Delete</a> -->
-                                                        <form action="{{ route('brands.destroy', $brand->id) }}"
+                                                        <form action="{{ route('admin.brands.destroy', $brand->id) }}"
                                                             method="POST" class="d-inline">
                                                             @csrf
                                                             @method('DELETE')

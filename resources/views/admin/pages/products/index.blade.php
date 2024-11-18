@@ -1,8 +1,8 @@
 @extends('admin.master')
 
-@section('title', 'Categories')
+@section('title', 'Products')
 
-@section('headerPage', 'Categories')
+@section('headerPage', 'Products')
 
 @section('admin-content')
     <div class="content-wrapper">
@@ -14,15 +14,14 @@
                 <div class="row">
                     <div class="col-md-12">
 
-                        @if (session('status'))
-                            <div class="alert alert-success">{{ session('status') }}</div>
-                        @endif
+                        @include('inc.success')
 
                         <div class="card mt-3">
                             <div class="card-header">
-                                <h4>Categories
-                                        <a href="{{route('admin.categories.create')}}" class="btn btn-primary float-end">Add
-                                            Category</a>
+                                <h4>Products
+                                    <a href="{{ route('admin.products.create') }}" class="btn btn-primary float-end">
+                                        Add Product
+                                    </a>
                                 </h4>
                             </div>
                             <div class="card-body">
@@ -37,28 +36,29 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($categories as $category)
+                                        {{-- @foreach ($categories as $category)
                                             <tr>
                                                 <td>{{ $category->id }}</td>
                                                 <td>{{ $category->name }}</td>
                                                 <td>
-                                                    <img class="img-fluid" style="width: 90px;" src="{{ $category->image }}" alt="{{ $category->name }}">
+                                                    <img class="img-fluid" style="width: 90px;" src="{{ $category->image }}"
+                                                        alt="{{ $category->name }}">
                                                 </td>
                                                 <td>
-                                                        <a href="{{ route('admin.categories.edit', $category->id) }}"
-                                                            class="btn btn-success">Edit</a>
-                                                        <!-- <a href=""
-                                                            class="btn btn-danger mx-2">Delete</a> -->
-                                                        <form action="{{ route('admin.categories.destroy', $category->id) }}"
-                                                            method="POST" class="d-inline">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                                        </form>
+                                                    <a href="{{ route('admin.products.edit', $category->id) }}"
+                                                        class="btn btn-success">
+                                                        Edit
+                                                    </a>
+                                                    <form action="{{ route('admin.products.destroy', $category->id) }}"
+                                                        method="POST" class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </form>
 
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        @endforeach --}}
                                     </tbody>
                                 </table>
 

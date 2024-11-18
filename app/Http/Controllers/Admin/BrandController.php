@@ -34,17 +34,17 @@ class BrandController extends Controller
             'name' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        
+
 
         if($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = $file->store('brands', 'public');
             $data['image'] = "storage/" . $fileName;
         }
-        
+
         Brand::create($data);
 
-        return redirect(route('brands.index'))->with('status', 'Brand Created Successfully');
+        return redirect(route('admin.brands.index'))->with('status', 'Brand Created Successfully');
     }
 
     /**
@@ -73,17 +73,17 @@ class BrandController extends Controller
             'name' => 'required|string|max:255',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        
+
 
         if($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = $file->store('categories', 'public');
             $data['image'] = "storage/" . $fileName;
         }
-        
+
         Brand::findOrFail($id)->update($data);
 
-        return redirect(route('brands.index'))->with('status', 'Brand Updated Successfully');
+        return redirect(route('admin.brands.index'))->with('status', 'Brand Updated Successfully');
     }
 
     /**
@@ -92,6 +92,6 @@ class BrandController extends Controller
     public function destroy(string $id)
     {
         Brand::findOrFail($id)->delete();
-        return redirect()->route('brands.index')->with('status', 'Brand Deleted Successfully');
+        return redirect()->route('admin.brands.index')->with('status', 'Brand Deleted Successfully');
     }
 }

@@ -1,8 +1,8 @@
 @extends('admin.master')
 
-@section('title', 'Categories')
+@section('title', 'Tags')
 
-@section('headerPage', 'Categories')
+@section('headerPage', 'Tags')
 
 @section('admin-content')
     <div class="content-wrapper">
@@ -13,32 +13,22 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-
-                        @if ($errors->any())
-                            <ul class="alert alert-warning">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        @endif
-
                         <div class="card">
                             <div class="card-header">
-                                <h4>Create Category
-                                    <a href="{{ route('admin.categories.index') }}" class="btn btn-danger float-end">Back</a>
+                                <h4>Create Tag
+                                    <a href="{{ route('admin.tags.index') }}" class="btn btn-danger float-end">Back</a>
                                 </h4>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('admin.tags.store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
 
                                     <div class="mb-3">
-                                        <label for="">Categories Name</label>
+                                        <label for="">Brand Name</label>
                                         <input type="text" name="name" class="form-control" />
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="">Categories Image</label>
-                                        <input type="file" name="image" class="form-control" />
+                                        @error('record')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                     <div class="mb-3">
                                         <button type="submit" class="btn btn-primary">Save</button>

@@ -32,6 +32,99 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
+                <li class="nav-item @if (request()->is('products*')) menu-is-opening menu-open @endif">
+                    <a href="#" class="nav-link @if (request()->is('products*')) active @endif">
+                        {{-- <i class="nav-icon fas fa-tags"></i> --}}
+                        <i class="fas fa-cart-plus nav-icon"></i>
+                        <p>
+                            Products
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.products.create') }}" class="nav-link @if (request()->is('products/create')) active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>New Product</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.products.index') }}" class="nav-link @if (request()->is('products')) active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Products</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item @if (request()->is('categories*')) menu-is-opening menu-open @endif">
+                    <a href="#" class="nav-link @if (request()->is('categories*')) active @endif">
+                        <i class="nav-icon fas fa-shopping-bag"></i>
+                        <p>
+                            Categories
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.categories.create') }}" class="nav-link @if (request()->is('categories/create')) active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>New Category</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.categories.index') }}" class="nav-link @if (request()->is('categories')) active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Categories</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item @if (request()->is('tags*')) menu-is-opening menu-open @endif">
+                    <a href="#" class="nav-link @if (request()->is('tags*')) active @endif">
+                        <i class="nav-icon fas fa-tags"></i>
+                        <p>
+                            Tags
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.tags.create') }}" class="nav-link @if (request()->is('tags/create')) active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>New Tag</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.tags.index') }}" class="nav-link @if (request()->is('tags')) active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Tags</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item @if (request()->is('brands*')) menu-is-opening menu-open @endif">
+                    <a href="#" class="nav-link @if (request()->is('brands*')) active @endif">
+                        <i class="nav-icon fas fa-paint-brush"></i>
+                        <p>
+                            Brands
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.brands.create') }}" class="nav-link @if (request()->is('brands/create')) active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>New Brand</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.brands.index') }}" class="nav-link @if (request()->is('brands')) active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Brands</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item">
                     <a href="{{ url('roles') }}" class="nav-link @if (request()->is('roles*')) active @endif">
                         <i class="fas fa-thumbtack nav-icon"></i>
@@ -56,52 +149,6 @@
                         <i class="fas fa-envelope nav-icon"></i>
                         <p>Messages</p>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tags"></i>
-                        <p>
-                            Category
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('categories.create') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>New Categories</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('categories.index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Categories</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tags"></i>
-                        <p>
-                            Brand
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('brands.create') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>New Brands</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('brands.index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Brands</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('logout') }}" class="nav-link"

@@ -34,17 +34,17 @@ class CategoryController extends Controller
             'name' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        
+
 
         if($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = $file->store('categories', 'public');
             $data['image'] = "storage/" . $fileName;
         }
-        
+
         Category::create($data);
 
-        return redirect(route('categories.index'))->with('status', 'Category Created Successfully');
+        return redirect(route('admin.categories.index'))->with('status', 'Category Created Successfully');
     }
 
     /**
@@ -74,17 +74,17 @@ class CategoryController extends Controller
             'name' => 'required|string|max:255',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        
+
 
         if($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = $file->store('categories', 'public');
             $data['image'] = "storage/" . $fileName;
         }
-        
+
         Category::findOrFail($id)->update($data);
 
-        return redirect(route('categories.index'))->with('status', 'Category Updated Successfully');
+        return redirect(route('admin.categories.index'))->with('status', 'Category Updated Successfully');
     }
 
     /**
@@ -93,6 +93,6 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         Category::findOrFail($id)->delete();
-        return redirect()->route('categories.index')->with('status', 'Category Deleted Successfully');
+        return redirect()->route('admin.categories.index')->with('status', 'Category Deleted Successfully');
     }
 }
