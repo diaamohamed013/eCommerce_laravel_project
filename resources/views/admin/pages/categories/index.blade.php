@@ -39,7 +39,7 @@
                                     <tbody>
                                         @foreach ($categories as $category)
                                             <tr>
-                                                <td>{{ $category->id }}</td>
+                                                <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $category->name }}</td>
                                                 <td>
                                                     <img class="img-fluid" style="width: 90px;" src="{{ $category->image }}" alt="{{ $category->name }}">

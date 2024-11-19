@@ -37,10 +37,6 @@
                                         <input type="text" name="name" class="form-control" />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="">Brand Image</label>
-                                        <input type="file" name="image" class="form-control" />
-                                    </div>
-                                    <div class="mb-3">
                                         <button type="submit" class="btn btn-primary">Save</button>
                                     </div>
                                 </form>

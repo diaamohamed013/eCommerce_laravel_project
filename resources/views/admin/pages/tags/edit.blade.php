@@ -24,14 +24,14 @@
                                     @csrf
                                     @method('PUT')
                                     <div class="mb-3">
-                                        <label for="">Brand Name</label>
-                                        <input type="text" name="name" class="form-control" value="{{ $tag->name }}" />
-                                        @error('record')
+                                        <label for="">Tag Name</label>
+                                        <input type="text" name="tag_name" class="form-control" value="{{ $tag->tag_name }}" />
+                                        @error('tag_name')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="submit" class="btn btn-primary">Update</button>
                                     </div>
                                 </form>
                             </div>

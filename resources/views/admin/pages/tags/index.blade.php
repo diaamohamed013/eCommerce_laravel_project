@@ -30,21 +30,27 @@
                                     <thead>
                                         <tr>
                                             <th>Id</th>
-                                            <th>Name</th>
+                                            <th>Tag Name</th>
+                                            <th>Products</th>
                                             <th width="40%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @foreach ($brands as $brand)
+                                        @foreach ($tags as $tag)
                                             <tr>
-                                                <td>{{ $brand->id }}</td>
-                                                <td>{{ $brand->name }}</td>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $tag->tag_name }}</td>
                                                 <td>
-                                                    <a href="{{ route('admin.tags.edit', $brand->id) }}"
+                                                    @foreach ($tag->products as $product)
+                                                        <span class="badge bg-info my-1">{{ $product->title }}</span>
+                                                    @endforeach
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('admin.tags.edit', $tag->id) }}"
                                                         class="btn btn-success">Edit</a>
                                                     <!-- <a href=""
                                                                 class="btn btn-danger mx-2">Delete</a> -->
-                                                    <form action="{{ route('admin.tags.destroy', $brand->id) }}"
+                                                    <form action="{{ route('admin.tags.destroy', $tag->id) }}"
                                                         method="POST" class="d-inline">
                                                         @csrf
                                                         @method('DELETE')
@@ -53,7 +59,7 @@
 
                                                 </td>
                                             </tr>
-                                        @endforeach --}}
+                                        @endforeach
                                     </tbody>
                                 </table>
 

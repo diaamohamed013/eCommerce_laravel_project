@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
@@ -12,7 +13,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.tags.index');
+        $tags = Tag::get();
+        return view('admin.pages.tags.index',compact('tags'));
     }
 
     /**
@@ -28,7 +30,11 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'tag_name' => 'required|string|max:255',
+        ]);
+        Tag::create($data);
+        return redirect()->route('admin.tags.index')->with('success', 'Tag created successfully');
     }
 
     /**
@@ -42,24 +48,29 @@ class TagController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Tag $tag)
     {
-        //
+        return view('admin.pages.tags.edit', compact('tag'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Tag $tag)
     {
-        //
+        $data = $request->validate([
+            'tag_name' => 'required|string|max:255',
+        ]);
+        $tag->update($data);
+        return redirect()->route('admin.tags.index')->with('success', 'Tag updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Tag $tag)
     {
-        //
+        $tag->delete();
+        return redirect()->route('admin.tags.index')->with('success', 'Tag deleted successfully');
     }
 }

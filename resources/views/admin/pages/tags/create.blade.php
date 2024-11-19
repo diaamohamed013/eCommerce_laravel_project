@@ -24,9 +24,9 @@
                                     @csrf
 
                                     <div class="mb-3">
-                                        <label for="">Brand Name</label>
-                                        <input type="text" name="name" class="form-control" />
-                                        @error('record')
+                                        <label for="">Tag Name</label>
+                                        <input type="text" name="tag_name" class="form-control" />
+                                        @error('tag_name')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>

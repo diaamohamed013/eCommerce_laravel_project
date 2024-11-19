@@ -32,18 +32,14 @@
                                         <tr>
                                             <th>Id</th>
                                             <th>Name</th>
-                                            <th>Image</th>
                                             <th width="40%">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($brands as $brand)
                                             <tr>
-                                                <td>{{ $brand->id }}</td>
+                                                <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $brand->name }}</td>
-                                                <td>
-                                                    <img class="img-fluid" style="width: 90px;" src="{{ $brand->image }}" alt="{{ $brand->name }}">
-                                                </td>
                                                 <td>
                                                         <a href="{{ route('admin.brands.edit', $brand->id) }}"
                                                             class="btn btn-success">Edit</a>

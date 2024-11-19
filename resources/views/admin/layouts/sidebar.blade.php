@@ -43,13 +43,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.products.create') }}" class="nav-link @if (request()->is('products/create')) active @endif">
+                            <a href="{{ route('admin.products.create') }}" class="nav-link ml-3 @if (request()->is('products/create')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>New Product</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.products.index') }}" class="nav-link @if (request()->is('products')) active @endif">
+                            <a href="{{ route('admin.products.index') }}" class="nav-link ml-3 @if (request()->is('products')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>All Products</p>
                             </a>
@@ -66,13 +66,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.categories.create') }}" class="nav-link @if (request()->is('categories/create')) active @endif">
+                            <a href="{{ route('admin.categories.create') }}" class="nav-link ml-3 @if (request()->is('categories/create')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>New Category</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.categories.index') }}" class="nav-link @if (request()->is('categories')) active @endif">
+                            <a href="{{ route('admin.categories.index') }}" class="nav-link ml-3 @if (request()->is('categories')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>All Categories</p>
                             </a>
@@ -89,13 +89,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.tags.create') }}" class="nav-link @if (request()->is('tags/create')) active @endif">
+                            <a href="{{ route('admin.tags.create') }}" class="nav-link ml-3 @if (request()->is('tags/create')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>New Tag</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.tags.index') }}" class="nav-link @if (request()->is('tags')) active @endif">
+                            <a href="{{ route('admin.tags.index') }}" class="nav-link ml-3 @if (request()->is('tags')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>All Tags</p>
                             </a>
@@ -112,13 +112,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.brands.create') }}" class="nav-link @if (request()->is('brands/create')) active @endif">
+                            <a href="{{ route('admin.brands.create') }}" class="nav-link ml-3 @if (request()->is('brands/create')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>New Brand</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.brands.index') }}" class="nav-link @if (request()->is('brands')) active @endif">
+                            <a href="{{ route('admin.brands.index') }}" class="nav-link ml-3 @if (request()->is('brands')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>All Brands</p>
                             </a>
@@ -151,7 +151,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('logout') }}" class="nav-link"
+                    <a href="{{ route('logout') }}" class="nav-link bg-danger rounded-pill mt-3 text-center"
                         onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
                         {{ __('Logout') }}

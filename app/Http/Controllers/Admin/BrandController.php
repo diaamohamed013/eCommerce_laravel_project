@@ -32,15 +32,7 @@ class BrandController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
-
-        if($request->hasFile('image')) {
-            $file = $request->file('image');
-            $fileName = $file->store('brands', 'public');
-            $data['image'] = "storage/" . $fileName;
-        }
 
         Brand::create($data);
 
@@ -71,15 +63,7 @@ class BrandController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
-
-        if($request->hasFile('image')) {
-            $file = $request->file('image');
-            $fileName = $file->store('categories', 'public');
-            $data['image'] = "storage/" . $fileName;
-        }
 
         Brand::findOrFail($id)->update($data);
 

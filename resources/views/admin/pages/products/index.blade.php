@@ -31,25 +31,41 @@
                                         <tr>
                                             <th>Id</th>
                                             <th>Name</th>
+                                            <th>Price</th>
+                                            <th>Sale Percentage</th>
+                                            <th>Stock Quntity</th>
                                             <th>Image</th>
-                                            <th width="40%">Action</th>
+                                            <th>Category Name</th>
+                                            <th>Brand Name</th>
+                                            <th>Tags</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @foreach ($categories as $category)
+                                        @foreach ($products as $product)
                                             <tr>
-                                                <td>{{ $category->id }}</td>
-                                                <td>{{ $category->name }}</td>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $product->title }}</td>
+                                                <td>{{ $product->price }}</td>
+                                                <td>{{ $product->sale_percentage }}</td>
+                                                <td>{{ $product->stock_quantity }}</td>
                                                 <td>
-                                                    <img class="img-fluid" style="width: 90px;" src="{{ $category->image }}"
-                                                        alt="{{ $category->name }}">
+                                                    <img class="img-fluid" style="width: 90px;" src="{{ $product->image }}"
+                                                        alt="{{ $product->title }}">
+                                                </td>
+                                                <td>{{ $product->category->name }}</td>
+                                                <td>{{ $product->brand->name }}</td>
+                                                <td>
+                                                    @foreach ($product->tags as $tag)
+                                                        <span class="badge bg-primary my-1">{{ $tag->tag_name }}</span>
+                                                    @endforeach
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('admin.products.edit', $category->id) }}"
+                                                    <a href="{{ route('admin.products.edit', $product->id) }}"
                                                         class="btn btn-success">
                                                         Edit
                                                     </a>
-                                                    <form action="{{ route('admin.products.destroy', $category->id) }}"
+                                                    <form action="{{ route('admin.products.destroy', $product->id) }}"
                                                         method="POST" class="d-inline">
                                                         @csrf
                                                         @method('DELETE')
@@ -58,7 +74,7 @@
 
                                                 </td>
                                             </tr>
-                                        @endforeach --}}
+                                        @endforeach
                                     </tbody>
                                 </table>
 
