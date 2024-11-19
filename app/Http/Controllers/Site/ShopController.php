@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
@@ -13,6 +14,7 @@ class ShopController extends Controller
     {
         $brands = Brand::get();
         $categories = Category::get();
-        return view('site.pages.shop', compact('brands', 'categories'));
+        $tags = Tag::get();
+        return view('site.pages.shop', compact('brands', 'categories','tags'));
     }
 }

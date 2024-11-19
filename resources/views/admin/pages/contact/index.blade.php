@@ -1,8 +1,8 @@
 @extends('admin.master')
 
-@section('title', 'Brands')
+@section('title', 'Messages')
 
-@section('headerPage', 'Brands')
+@section('headerPage', 'Messages')
 
 @section('admin-content')
     <div class="content-wrapper">
@@ -14,15 +14,12 @@
                 <div class="row">
                     <div class="col-md-12">
 
-                        @if (session('status'))
-                            <div class="alert alert-success">{{ session('status') }}</div>
-                        @endif
+                        @include('inc.success')
 
                         <div class="card mt-3">
                             <div class="card-header">
-                                <h4>Brands
-                                        <a href="{{route('admin.brands.create')}}" class="btn btn-primary float-end">Add
-                                            Brand</a>
+                                <h4>
+                                    Messages
                                 </h4>
                             </div>
                             <div class="card-body">
@@ -32,26 +29,29 @@
                                         <tr>
                                             <th>Id</th>
                                             <th>Name</th>
-                                            <th width="40%">Action</th>
+                                            <th>Email</th>
+                                            <th>Message</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($brands as $brand)
+                                        @foreach ($messages as $message)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $brand->name }}</td>
+                                                <td>{{ $message->name }}</td>
+                                                <td>{{ $message->email }}</td>
                                                 <td>
-                                                        <a href="{{ route('admin.brands.edit', $brand->id) }}"
-                                                            class="btn btn-success">Edit</a>
-                                                        <!-- <a href=""
-                                                            class="btn btn-danger mx-2">Delete</a> -->
-                                                        <form action="{{ route('admin.brands.destroy', $brand->id) }}"
-                                                            method="POST" class="d-inline">
+                                                    {{ Str::limit($message->message, 50) }}
+                                                </td>
+                                                <td>
+                                                    @can('delete user')
+                                                        <form action="{{ route('admin.message.destroy', $message->id) }}"
+                                                            method="POST">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-danger">Delete</button>
                                                         </form>
-
+                                                    @endcan
                                                 </td>
                                             </tr>
                                         @endforeach

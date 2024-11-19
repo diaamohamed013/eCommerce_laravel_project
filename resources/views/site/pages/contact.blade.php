@@ -78,24 +78,40 @@
                             Our staff will call back later and answer your questions.
                         </p>
                     </div>
-                    <form>
+                    <form method="POST" action="{{ route('site.contact.store') }}">
+                        @csrf
                         <div class="row">
-                            <div class="col-lg-6 col-md-12">
-                                <input type="text" placeholder="Your Name">
+                            <div class="col-12">
+                                @include('inc.success')
                             </div>
                             <div class="col-lg-6 col-md-12">
-                                <input type="email" placeholder="Your Email">
+                                <input type="text" placeholder="Your Name" name="name" class="mb-0">
+                                @error('name')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <input type="email" placeholder="Your Email" name="email" class="mb-0">
+                                @error('email')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col-lg-12 col-md-12">
-                                <textarea placeholder="Message"></textarea>
+                                <textarea placeholder="Message" name="message" class="mb-0"></textarea>
+                                @error('message')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-lg-12 col-md-12 mt-4">
                                 <button class="btn text-uppercase">
                                     send message
                                 </button>
                             </div>
                         </div>
-                    </form>
                 </div>
+                </form>
             </div>
+        </div>
         </div>
     </section>
 @endsection

@@ -25,11 +25,11 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4>Create Category
-                                    <a href="{{ route('categories.index') }}" class="btn btn-danger float-end">Back</a>
+                                    <a href="{{ route('admin.categories.index') }}" class="btn btn-danger float-end">Back</a>
                                 </h4>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
 
                                     <div class="mb-3">

@@ -1,8 +1,8 @@
 @extends('admin.master')
 
-@section('title', 'Brands')
+@section('title', 'Tags')
 
-@section('headerPage', 'Brands')
+@section('headerPage', 'Tags')
 
 @section('admin-content')
     <div class="content-wrapper">
@@ -13,31 +13,25 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-
-                        @if ($errors->any())
-                            <ul class="alert alert-warning">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        @endif
-
                         <div class="card">
                             <div class="card-header">
-                                <h4>Create Brand
-                                    <a href="{{ route('admin.brands.index') }}" class="btn btn-danger float-end">Back</a>
+                                <h4>Edit Tag
+                                    <a href="{{ route('admin.tags.index') }}" class="btn btn-danger float-end">Back</a>
                                 </h4>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('admin.brands.store') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('admin.tags.update', $tag->id) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
-
+                                    @method('PUT')
                                     <div class="mb-3">
-                                        <label for="">Brand Name</label>
-                                        <input type="text" name="name" class="form-control" />
+                                        <label for="">Tag Name</label>
+                                        <input type="text" name="tag_name" class="form-control" value="{{ $tag->tag_name }}" />
+                                        @error('tag_name')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                     <div class="mb-3">
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="submit" class="btn btn-primary">Update</button>
                                     </div>
                                 </form>
                             </div>

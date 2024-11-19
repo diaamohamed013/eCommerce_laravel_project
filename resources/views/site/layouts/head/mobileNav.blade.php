@@ -150,19 +150,21 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="contact.html">Contact</a>
+                    <a class="nav-link " href="{{ route('site.contact') }}">Contact</a>
                 </li>
                 @auth
                     <li class="nav-item ">
-                        <a class="nav-link" href="contact.html">Shopping Cart</a>
+                        <a class="nav-link" href="">Shopping Cart</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">CheckOut</a>
+                        <a class="nav-link" href="">CheckOut</a>
                     </li>
                 @endauth
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Faq</a>
-                </li>
+                @if (Auth::check() && Auth::user()->hasRole(['super-admin', 'admin']))
+                    <li class="nav-item1 ">
+                        <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                    </li>
+                @endif
             </ul>
         </div>
     </nav>

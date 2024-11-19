@@ -25,11 +25,11 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4>Edit Brand
-                                    <a href="{{ route('brands.index') }}" class="btn btn-danger float-end">Back</a>
+                                    <a href="{{ route('admin.brands.index') }}" class="btn btn-danger float-end">Back</a>
                                 </h4>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('brands.update', $brand->id) }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('admin.brands.update', $brand->id) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <div class="mb-3">
@@ -37,11 +37,7 @@
                                         <input type="text" name="name" class="form-control" value="{{ $brand->name }}" />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="">brand Image</label>
-                                        <input type="file" name="image" class="form-control"/>
-                                    </div>
-                                    <div class="mb-3">
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="submit" class="btn btn-primary">Update</button>
                                     </div>
                                 </form>
                             </div>

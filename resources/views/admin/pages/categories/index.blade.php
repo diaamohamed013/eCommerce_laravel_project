@@ -21,7 +21,7 @@
                         <div class="card mt-3">
                             <div class="card-header">
                                 <h4>Categories
-                                        <a href="{{route('categories.create')}}" class="btn btn-primary float-end">Add
+                                        <a href="{{route('admin.categories.create')}}" class="btn btn-primary float-end">Add
                                             Category</a>
                                 </h4>
                             </div>
@@ -39,17 +39,17 @@
                                     <tbody>
                                         @foreach ($categories as $category)
                                             <tr>
-                                                <td>{{ $category->id }}</td>
+                                                <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $category->name }}</td>
                                                 <td>
                                                     <img class="img-fluid" style="width: 90px;" src="{{ $category->image }}" alt="{{ $category->name }}">
                                                 </td>
                                                 <td>
-                                                        <a href="{{ route('categories.edit', $category->id) }}"
+                                                        <a href="{{ route('admin.categories.edit', $category->id) }}"
                                                             class="btn btn-success">Edit</a>
                                                         <!-- <a href=""
                                                             class="btn btn-danger mx-2">Delete</a> -->
-                                                        <form action="{{ route('categories.destroy', $category->id) }}"
+                                                        <form action="{{ route('admin.categories.destroy', $category->id) }}"
                                                             method="POST" class="d-inline">
                                                             @csrf
                                                             @method('DELETE')
