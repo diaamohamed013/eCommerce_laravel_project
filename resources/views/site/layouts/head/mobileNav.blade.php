@@ -1,7 +1,7 @@
 <!-- start navbar that displayed in responsive mood -->
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="navbar-brand" href="index.html">
+        <div class="navbar-brand" href="{{ route('site.home') }}">
             <div class="shopping">
                 <i class="fal fa-heart ml-3">
                     <span class="one">1</span>
@@ -88,12 +88,12 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{{ route('site.home') }}">Home<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="shop.html">Shop</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="#">
                         All Department
                         <div class='fa fa-caret-right right'></div>
@@ -125,7 +125,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                         Collection
@@ -150,41 +150,21 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="contact.html">Contact</a>
+                    <a class="nav-link " href="{{ route('site.contact') }}">Contact</a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="#">
-                        Pages
-                        <div class='fa fa-caret-right right'></div>
-                    </a>
-                    <ul>
-                        <li>
-                            <a href="shopping cart.html">
-                                Shopping Cart
-                            </a>
-                        </li>
-                        <li>
-                            <a href="checkout.html">
-                                ChecOut
-                            </a>
-                        </li>
-                        <li>
-                            <a href="faq.html">
-                                Faq
-                            </a>
-                        </li>
-                        <li>
-                            <a href="register.html">
-                                Register
-                            </a>
-                        </li>
-                        <li>
-                            <a href="login.html">
-                                Login
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                @auth
+                    <li class="nav-item ">
+                        <a class="nav-link" href="">Shopping Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="">CheckOut</a>
+                    </li>
+                @endauth
+                @if (Auth::check() && Auth::user()->hasRole(['super-admin', 'admin']))
+                    <li class="nav-item1 ">
+                        <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                    </li>
+                @endif
             </ul>
         </div>
     </nav>

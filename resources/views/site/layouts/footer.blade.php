@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-12 col-sm-12 col-12">
                     <div class="footerLogo pb-5">
-                        <a href="index.html">
+                        <a href="{{ route('site.home') }}">
                             <img src="{{ asset('site/img/footer-logo.png') }}" alt="logo">
                         </a>
                     </div>
@@ -43,7 +43,7 @@
                     </div>
                     <div class="footerMail">
                         <span>
-                            Email: hello.colorlib@gmail.com
+                            Email: hello.test@gmail.com
                         </span>
                     </div>
                     <div class="footerSocial pt-5">
@@ -165,6 +165,6 @@
     @stack('js')
     <script src="{{ asset('site/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('site/js/main.js') }}"></script>
-</body>
+    </body>
 
-</html>
+    </html>

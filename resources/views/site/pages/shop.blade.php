@@ -3,7 +3,7 @@
 @section('title', 'Shop')
 
 @push('css')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.0/nouislider.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.0/nouislider.css">
 @endpush
 
 @section('page', 'Shop')
@@ -18,15 +18,11 @@
                             categories
                         </h4>
                         <ul>
-                            <li>
-                                <a href="#">men</a>
-                            </li>
-                            <li>
-                                <a href="#">women</a>
-                            </li>
-                            <li>
-                                <a href="#">kids</a>
-                            </li>
+                            @foreach ($categories as $category)
+                                <li>
+                                    <a href="#">{{ $category->name }}</a>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                     <div class="shop-brand">
@@ -34,34 +30,15 @@
                             brand
                         </h4>
                         <div class="brand-item">
-                            <div class="item">
-                                <label for="calvin">
-                                    calvin klein
-                                    <input type="checkbox" id="calvin">
-                                    <span></span>
-                                </label>
-                            </div>
-                            <div class="item">
-                                <label for="diesel">
-                                    diesel
-                                    <input type="checkbox" id="diesel">
-                                    <span></span>
-                                </label>
-                            </div>
-                            <div class="item">
-                                <label for="polo">
-                                    polo
-                                    <input type="checkbox" id="polo">
-                                    <span></span>
-                                </label>
-                            </div>
-                            <div class="item">
-                                <label for="tommy">
-                                    tommy hilfiger
-                                    <input type="checkbox" id="tommy">
-                                    <span></span>
-                                </label>
-                            </div>
+                            @foreach ($brands as $brand)
+                                <div class="item">
+                                    <label for="calvin">
+                                        {{ $brand->name }}
+                                        <input type="checkbox" id="calvin">
+                                        <span></span>
+                                    </label>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="shop-price">
@@ -153,13 +130,9 @@
                         <h4>
                             product tags
                         </h4>
-                        <a href="#">towel</a>
-                        <a href="#">shoes</a>
-                        <a href="#">coat</a>
-                        <a href="#">dresses</a>
-                        <a href="#">trousers</a>
-                        <a href="#">men's hats</a>
-                        <a href="#">backpack</a>
+                        @foreach ($tags as $tag)
+                            <a href="#">{{$tag->tag_name}}</a>
+                        @endforeach
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-12 order-1 order-lg-2">
@@ -169,24 +142,24 @@
                                 <option value>Default Sorting</option>
                             </select>
                             <!-- <div class="sorting default">
-                                    <span>Default Sorting</span>
-                                    <ul>
-                                        <li>
-                                            Default Sorting
-                                        </li>
-                                    </ul>
-                                </div> -->
+                                        <span>Default Sorting</span>
+                                        <ul>
+                                            <li>
+                                                Default Sorting
+                                            </li>
+                                        </ul>
+                                    </div> -->
                             <select class="show">
                                 <option value>Show: </option>
                             </select>
                             <!-- <div class="show default">
-                                    <span>Show:</span>
-                                    <ul>
-                                        <li>
-                                            Show:
-                                        </li>
-                                    </ul>
-                                </div> -->
+                                        <span>Show:</span>
+                                        <ul>
+                                            <li>
+                                                Show:
+                                            </li>
+                                        </ul>
+                                    </div> -->
                             <div class="clr"></div>
                         </div>
                         <div class="col-lg-5 col-md-5 text-right">
