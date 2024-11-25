@@ -9,6 +9,7 @@
     <link rel="icon" href="{{ asset('site/img/filled_bow_tie_40px.png') }}">
     <link rel="stylesheet" href="{{ asset('site/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1-rc.1/css/select2.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.0/nouislider.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('site/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('site/css/owl.theme.green.css') }}">
     @stack('css')
