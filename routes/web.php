@@ -35,4 +35,5 @@ Route::as('site.')->group(function(){
     Route::post('contact-us', [HomeController::class, 'sendMessage'])->name('contact.store');
     Route::get('forbidden', [HomeController::class, 'inCorrectRole'])->name('forbidden');
     Route::get('shop', [ShopController::class, 'index'])->name('shop');
+    Route::post('shop/filter', [ShopController::class, 'filter'])->name('filter');
 });
