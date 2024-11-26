@@ -13,12 +13,8 @@ return new class extends Migration
     {
         Schema::create('product_size', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('size_id');
-            $table->integer('stock_quantity')->default(0);
-
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->foreign('size_id')->references('id')->on('sizes')->onDelete('cascade');
+            $table->foreignId('product_id')->references('id')->on('products')->cascadeOnDelete();
+            $table->foreignId('size_id')->references('id')->on('sizes')->cascadeOnDelete();
             $table->timestamps();
         });
     }

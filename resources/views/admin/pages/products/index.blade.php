@@ -38,6 +38,7 @@
                                             <th>Category Name</th>
                                             <th>Brand Name</th>
                                             <th>Tags</th>
+                                            <th>Sizes</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -58,6 +59,11 @@
                                                 <td>
                                                     @foreach ($product->tags as $tag)
                                                         <span class="badge bg-primary my-1">{{ $tag->tag_name }}</span>
+                                                    @endforeach
+                                                </td>
+                                                <td>
+                                                    @foreach ($product->sizes as $size)
+                                                        <span class="badge bg-info my-1">{{ $size->name }}</span>
                                                     @endforeach
                                                 </td>
                                                 <td>

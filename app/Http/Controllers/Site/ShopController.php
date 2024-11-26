@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Size;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
@@ -16,8 +17,9 @@ class ShopController extends Controller
         $brands = Brand::all();
         $categories = Category::all();
         $tags = Tag::all();
-        $products = Product::with(['brand', 'category', 'tags'])->paginate(12);
-        return view('site.pages.shop', compact('brands', 'categories','tags','products'));
+        $sizes = Size::all();
+        $products = Product::with(['brand', 'category', 'tags','sizes'])->paginate(12);
+        return view('site.pages.shop', compact('brands', 'categories','tags','products','sizes'));
     }
 
     public function singleProduct(Product $product)
@@ -37,7 +39,7 @@ class ShopController extends Controller
     {
         // Find the category by its name or ID
         $category = Category::where('name', $category)->firstOrFail(); // or use `findOrFail` for ID
-        
+
         // Fetch products associated with the category
         $products = $category->products()->paginate(12); // You can adjust the pagination as needed
 
@@ -47,10 +49,18 @@ class ShopController extends Controller
 
     public function filter(Request $request)
     {
+        // dd($request);
         $query = Product::query();
+
 
         if ($request->has('categories') && !empty($request->categories)) {
             $query->whereIn('category_id', $request->categories);
+        }
+
+        if ($request->has('sizes') && !empty($request->sizes)) {
+            $query->whereHas('sizes', function ($q) use ($request) {
+                $q->where('size_id', $request->sizes);
+            });
         }
 
             // Filter by tag
@@ -71,7 +81,7 @@ class ShopController extends Controller
             $query->whereIn('brand_id', $request->brands);
         }
 
-        $products = $query->with(['brand', 'category', 'tags'])->paginate(12);
+        $products = $query->with(['brand', 'category', 'tags','sizes'])->paginate(12);
 
         return response()->json([
             'data' => $products->items(),

@@ -77,71 +77,19 @@
                             <button class="btn price-filter-btn">Filter</button>
                         </div>
                     </div>
-                    <div class="shop-color">
-                        <h4>
-                            color
-                        </h4>
-                        <div class="color-item">
-                            <div class="item">
-                                <input type="radio" id="black">
-                                <label for="black">
-                                    black
-                                </label>
-                            </div>
-                            <div class="item">
-                                <input type="radio" id="violet">
-                                <label class="violet" for="violet">
-                                    violet
-                                </label>
-                            </div>
-                            <div class="item">
-                                <input type="radio" id="blue">
-                                <label class="blue" for="blue">
-                                    blue
-                                </label>
-                            </div>
-                            <div class="item">
-                                <input type="radio" id="yellow">
-                                <label class="yellow" for="yellow">
-                                    yellow
-                                </label>
-                            </div>
-                            <div class="item">
-                                <input type="radio" id="red">
-                                <label class="red" for="red">
-                                    red
-                                </label>
-                            </div>
-                            <div class="item">
-                                <input type="radio" id="green">
-                                <label class="green" for="green">
-                                    green
-                                </label>
-                            </div>
-                            <div class="clr"></div>
-                        </div>
-                    </div>
-                    <div class="shop-size">
-                        <h4>
-                            size
-                        </h4>
-                        <div class="size-item">
-                            <label for="small">s
-                                <input type="radio" id="small">
-                            </label>
-
-                            <label for="medium">m
-                                <input type="radio" id="medium">
-                            </label>
-
-                            <label for="larg">l
-                                <input type="radio" id="larg">
-                            </label>
-
-                            <label for="xlarg">xs
-                                <input type="radio" id="xlarg">
-                            </label>
-
+                    <div class="blog-category">
+                        <h4>All Sizes</h4>
+                        <div class="category-item brand-item">
+                            @foreach ($sizes as $size)
+                                <div class="item">
+                                    <label for="size-{{ $size->name }}">
+                                        {{ $size->name }} ({{ $size->products ? $size->products->count() : 0 }})
+                                        <input type="checkbox" class="size-filter" value="{{ $size->id }}"
+                                            id="size-{{ $size->name }}">
+                                        <span></span>
+                                    </label>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="blog-tags">
@@ -163,13 +111,13 @@
                                 <option value>Show: </option>
                             </select>
                             <!-- <div class="show default">
-                                                <span>Show:</span>
-                                                <ul>
-                                                    <li>
-                                                        Show:
-                                                    </li>
-                                                </ul>
-                                            </div> -->
+                                                        <span>Show:</span>
+                                                        <ul>
+                                                            <li>
+                                                                Show:
+                                                            </li>
+                                                        </ul>
+                                                    </div> -->
                             <div class="clr"></div>
                         </div>
                     </div>
@@ -192,7 +140,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="{{route('site.single-product', $product->id)}}">
+                                                <a href="{{ route('site.single-product', $product->id) }}">
                                                     <span>+ Quick View</span>
                                                 </a>
                                             </li>
@@ -211,7 +159,11 @@
                                         @foreach ($product->tags as $tag)
                                             <span class="badge bg-light text-muted py-1 my-1">{{ $tag->tag_name }}</span>
                                         @endforeach
-                                        <a href="#">
+                                        <br>
+                                        @foreach ($product->sizes as $size)
+                                            <span class="badge bg-light text-dark py-1 my-1">{{ $size->name }}</span>
+                                        @endforeach
+                                        <a href="{{ route('site.single-product', $product->id) }}">
                                             <h5>
                                                 {{ $product->title }}
                                             </h5>
@@ -292,7 +244,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">
+                                            <a href="{{ route('site.single-product', $product->id) }}">
                                                 <span>+ Quick View</span>
                                             </a>
                                         </li>
@@ -305,8 +257,10 @@
                                 </div>
                                 <div class="shop-text text-center">
                                     <h6>${product.category ? product.category.name : 'No Category'}</h6>
-                                    <span class="badge bg-light text-muted py-1 my-1">${product.tags ? product.tags.map(tag => tag.tag_name).join(', ') : 'No Tags'}</span>
-                                    <a href="#">
+                                    <span class="badge bg-light text-muted py-1 my-1">${product.tags ? product.tags.map(tag => tag.tag_name).join(' ') : 'No Tags'}</span>
+                                    <br>
+                                    <span class="badge bg-light text-dark py-1 my-1">${product.sizes ? product.sizes.map(size => size.name).join(' ') : 'No Sizes'}</span>
+                                    <a href="{{ route('site.single-product', $product->id) }}">
                                         <h5>${product.title}</h5>
                                     </a>
                                     <p>
@@ -319,20 +273,23 @@
                         </div>`;
                 });
 
-
-
                 productList.innerHTML = html;
             }
 
             // Function to fetch filtered products
             function fetchFilteredProducts(selectedTag = null) {
                 let categories = [];
+                let sizes = [];
                 let brands = [];
                 let priceRange = {};
 
                 // Collect selected categories
                 document.querySelectorAll('.category-filter:checked').forEach(function(category) {
                     categories.push(category.value);
+                });
+
+                document.querySelectorAll('.size-filter:checked').forEach(function(size) {
+                    sizes.push(size.value);
                 });
 
                 // Collect selected brands
@@ -352,10 +309,10 @@
                     };
                 }
 
-
                 // Create the request body
                 const requestBody = {
                     categories: categories,
+                    sizes: sizes,
                     brands: brands,
                     price_range: priceRange
                 };
@@ -365,6 +322,7 @@
                     requestBody.tag = selectedTag;
                 }
 
+                console.log(requestBody);
                 // AJAX request
                 fetch('{{ route('site.filter') }}', { // Update this URL to match your route
                         method: 'POST',
@@ -384,6 +342,12 @@
             // Event listener for category filter
             document.querySelectorAll('.category-filter').forEach(function(categoryFilter) {
                 categoryFilter.addEventListener('change', function() {
+                    fetchFilteredProducts();
+                });
+            });
+
+            document.querySelectorAll('.size-filter').forEach(function(sizeFilter) {
+                sizeFilter.addEventListener('change', function() {
                     fetchFilteredProducts();
                 });
             });
@@ -417,6 +381,7 @@
                     fetchFilteredProducts(tagValue);
                 });
             });
+
         });
     </script>
 @endpush
