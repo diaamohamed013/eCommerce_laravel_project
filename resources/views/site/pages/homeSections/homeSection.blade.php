@@ -14,9 +14,9 @@
                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
                                     incididunt ut labore et dolore
                                 </p>
-                                <button class="btn owl-slide-animated owl-slide-cta text-uppercase">
+                                <a href="{{route('site.shop')}}" class="btn owl-slide-animated owl-slide-cta text-uppercase">
                                     shop now
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -41,9 +41,9 @@
                                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
                                     incididunt ut labore et dolore
                                 </p>
-                                <button class="btn owl-slide-animated owl-slide-cta text-uppercase">
+                                <a href="{{route('site.shop')}}" class="btn owl-slide-animated owl-slide-cta text-uppercase">
                                     shop now
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>

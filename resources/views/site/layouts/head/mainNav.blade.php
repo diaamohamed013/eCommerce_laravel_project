@@ -1,3 +1,7 @@
+@php
+    use App\Models\Category;
+    $categories = Category::all();
+@endphp
 <!-- start navbar -->
 <nav class="nav1">
     <div class="container">
@@ -34,46 +38,38 @@
                             </li>
                         </ul>
                     </div> --}}
-            <li class="nav-item1 active1">
+            <li class="nav-item1 @if (request()->is('home*')) active1 @endif">
                 <a class="nav-link" href="{{ route('site.home') }}">HOME <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item1">
+            <li class="nav-item1 @if (request()->is('shop*')) active1 @endif">
                 <a class="nav-link" href="{{ route('site.shop') }}">SHOP</a>
             </li>
-            <li class="nav-item1">
+            <li class="nav-item1 @if (request()->is('category*')) active1 @endif">
                 <a class="nav-link" href="#">COLLECTION</a>
                 <ul class="collList">
-                    <li>
-                        <a href="#">
-                            Men's
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Women's
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Kid's
-                        </a>
-                    </li>
+                    @foreach ($categories as $category)
+                        <li class="nav-item1">
+                            <a href="{{ route('site.category.show', $category->name) }}">
+                                {{ $category->name }}
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </li>
-            <li class="nav-item1 ">
-                <a class="nav-link" href="{{route('site.contact')}}">CONTACT</a>
+            <li class="nav-item1 @if (request()->is('contact*')) active1 @endif">
+                <a class="nav-link" href="{{ route('site.contact') }}">CONTACT</a>
             </li>
             @auth
-                <li class="nav-item1 ">
+                <li class="nav-item1 @if (request()->is('shopping-cart*')) active1 @endif">
                     <a class="nav-link" href="">Shopping Cart</a>
                 </li>
-                <li class="nav-item1 ">
+                <li class="nav-item1 @if (request()->is('checkout*')) active1 @endif">
                     <a class="nav-link" href="">CheckOut</a>
                 </li>
             @endauth
             @if (Auth::check() && Auth::user()->hasRole(['super-admin', 'admin']))
                 <li class="nav-item1 ">
-                    <a class="nav-link" href="{{route('admin.dashboard')}}">Dashboard</a>
+                    <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
                 </li>
             @endif
         </ul>
