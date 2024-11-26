@@ -31,4 +31,19 @@ class Product extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
+
+    public function sizes()
+    {
+        return $this->belongsToMany(Size::class, 'product_size')
+            ->withPivot('stock_quantity');
+    }
+
+    // Scope for size filtering
+    public function scopeFilterBySize($query, $size)
+    {
+        return $query->whereHas('sizes', function ($q) use ($size) {
+            $q->where('sizes.name', $size)
+              ->where('product_size.stock_quantity', '>', 0);
+        });
+    }
 }
