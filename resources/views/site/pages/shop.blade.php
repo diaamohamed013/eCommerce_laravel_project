@@ -20,14 +20,15 @@
                                 <div class="item">
                                     <label for="category-{{ $category->id }}">
                                         {{ $category->name }} ({{ $category->products ? $category->products->count() : 0 }})
-                                        <input type="checkbox" class="category-filter" value="{{ $category->id }}" id="category-{{ $category->id }}">
+                                        <input type="checkbox" class="category-filter" value="{{ $category->id }}"
+                                            id="category-{{ $category->id }}">
                                         <span></span>
                                     </label>
                                 </div>
                             @endforeach
                         </div>
                     </div>
-                    
+
                     <div class="shop-brand">
                         <h4>Brand</h4>
                         <div class="brand-item">
@@ -35,7 +36,8 @@
                                 <div class="item">
                                     <label for="brand-{{ $brand->id }}">
                                         {{ $brand->name }} ({{ $brand->products ? $brand->products->count() : 0 }})
-                                        <input type="checkbox" class="brand-filter" value="{{ $brand->id }}" id="brand-{{ $brand->id }}">
+                                        <input type="checkbox" class="brand-filter" value="{{ $brand->id }}"
+                                            id="brand-{{ $brand->id }}">
                                         <span></span>
                                     </label>
                                 </div>
@@ -67,9 +69,7 @@
                                 <input type="text" class="filter__input min-price" readonly>
                                 <input type="text" class="filter__input max-price" readonly>
                             </div>
-                            <div id="sliderPrice" class="filter__slider-price" 
-                                data-min="0" 
-                                data-max="1000" 
+                            <div id="sliderPrice" class="filter__slider-price" data-min="0" data-max="1000"
                                 data-step="1">
                             </div>
                         </div>
@@ -149,7 +149,7 @@
                             product tags
                         </h4>
                         @foreach ($tags as $tag)
-                            <a href="#" class="tag-link" data-value="{{ $tag->tag_name }}">{{$tag->tag_name}}</a>
+                            <a href="#" class="tag-link" data-value="{{ $tag->tag_name }}">{{ $tag->tag_name }}</a>
                         @endforeach
                     </div>
                 </div>
@@ -163,76 +163,77 @@
                                 <option value>Show: </option>
                             </select>
                             <!-- <div class="show default">
-                                        <span>Show:</span>
-                                        <ul>
-                                            <li>
-                                                Show:
-                                            </li>
-                                        </ul>
-                                    </div> -->
+                                                <span>Show:</span>
+                                                <ul>
+                                                    <li>
+                                                        Show:
+                                                    </li>
+                                                </ul>
+                                            </div> -->
                             <div class="clr"></div>
-                        </div>
-                        <div class="col-lg-5 col-md-5 text-right">
-                            <div class="list-text">
-                                <p>Show 01- 09 Of 36 Product</p>
-                            </div>
                         </div>
                     </div>
                     <div class="row" id="productList">
-                        @foreach ($products as $product )
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-12">
-                            <div class="shop-card pb-2">
-                                <div class="shop-pic ">
-                                    <img src="{{ $product->image }}" alt="{{ $product->title }}">
-                                    <div class="shop-pic-icon">
-                                        <i class="fal fa-heart"></i>
+                        @foreach ($products as $product)
+                            <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                                <div class="shop-card pb-2">
+                                    <div class="shop-pic ">
+                                        <img src="{{ asset($product->image) }}" alt="{{ $product->title }}">
+                                        <div class="shop-pic-icon">
+                                            <i class="fal fa-heart"></i>
+                                        </div>
+                                        <div class="shop-sale">
+                                            sale
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fas fa-shopping-cart text-white"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('site.single-product', $product->id)}}">
+                                                    <span>+ Quick View</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="far fa-random"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
-                                    <div class="shop-sale">
-                                        sale
+                                    <div class="shop-text text-center">
+                                        <h6>
+                                            {{-- when no category show no category --}}
+                                            {{ $product->category->name }}
+                                        </h6>
+                                        @foreach ($product->tags as $tag)
+                                            <span class="badge bg-light text-muted py-1 my-1">{{ $tag->tag_name }}</span>
+                                        @endforeach
+                                        <a href="#">
+                                            <h5>
+                                                {{ $product->title }}
+                                            </h5>
+                                        </a>
+                                        <p>
+                                            ${{ $product->sale_percentage }}
+                                            <span> ${{ $product->price }}</span>
+                                        </p>
+                                        <h6>
+                                            {{ $product->brand->name }}
+                                        </h6>
                                     </div>
-                                    <ul>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fal fa-clipboard"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <span>+ Quick View</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="far fa-random"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="shop-text text-center">
-                                    <h6>
-                                        {{-- when no category show no category --}}
-                                        {{ $product->category->name }}
-                                    </h6>
-                                    <h6>
-                                        {{ $product->tags->pluck('tag_name') }}
-                                    </h6>
-                                    <a href="#">
-                                        <h5>
-                                            {{ $product->title }}
-                                        </h5>
-                                    </a>
-                                    <p>
-                                        ${{ $product->sale_percentage }}
-                                        <span> ${{ $product->price }}</span>
-                                    </p>
-                                    <h6>
-                                        {{ $product->brand->name }}
-                                    </h6>
                                 </div>
                             </div>
-                        </div>  
                         @endforeach
-
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="paginationBox">
+                                {{ $products->links() }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -243,7 +244,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.0/nouislider.js"></script>
 
     <script>
-            document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
 
             const slider = document.getElementById('sliderPrice');
 
@@ -262,7 +263,7 @@
                 step: 1
             });
 
-            slider.noUiSlider.on('update', function (values, handle) {
+            slider.noUiSlider.on('update', function(values, handle) {
                 if (handle === 0) {
                     document.querySelector('.filter__input.min-price').value = Math.round(values[0]);
                 } else {
@@ -287,7 +288,7 @@
                                     <ul>
                                         <li>
                                             <a href="#">
-                                                <i class="fal fa-clipboard"></i>
+                                                <i class="fas fa-shopping-cart text-white"></i>
                                             </a>
                                         </li>
                                         <li>
@@ -304,7 +305,7 @@
                                 </div>
                                 <div class="shop-text text-center">
                                     <h6>${product.category ? product.category.name : 'No Category'}</h6>
-                                    <h6>${product.tags ? product.tags.map(tag => tag.tag_name).join(', ') : 'No Tags'}</h6>
+                                    <span class="badge bg-light text-muted py-1 my-1">${product.tags ? product.tags.map(tag => tag.tag_name).join(', ') : 'No Tags'}</span>
                                     <a href="#">
                                         <h5>${product.title}</h5>
                                     </a>
@@ -330,26 +331,26 @@
                 let priceRange = {};
 
                 // Collect selected categories
-                document.querySelectorAll('.category-filter:checked').forEach(function (category) {
+                document.querySelectorAll('.category-filter:checked').forEach(function(category) {
                     categories.push(category.value);
                 });
 
                 // Collect selected brands
-                document.querySelectorAll('.brand-filter:checked').forEach(function (brand) {
+                document.querySelectorAll('.brand-filter:checked').forEach(function(brand) {
                     brands.push(brand.value);
                 });
 
 
-                    // Collect price range
-            const minPrice = document.querySelector('.filter__input.min-price').value;
-            const maxPrice = document.querySelector('.filter__input.max-price').value;
+                // Collect price range
+                const minPrice = document.querySelector('.filter__input.min-price').value;
+                const maxPrice = document.querySelector('.filter__input.max-price').value;
 
-            if (minPrice && maxPrice) {
-                priceRange = {
-                    min: parseFloat(minPrice),
-                    max: parseFloat(maxPrice)
-                };
-            }
+                if (minPrice && maxPrice) {
+                    priceRange = {
+                        min: parseFloat(minPrice),
+                        max: parseFloat(maxPrice)
+                    };
+                }
 
 
                 // Create the request body
@@ -365,66 +366,57 @@
                 }
 
                 // AJAX request
-                fetch('{{ route('site.filter') }}', {  // Update this URL to match your route
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                    },
-                    body: JSON.stringify(requestBody)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    renderProducts(data);
-                })
-                .catch(error => console.error('Error:', error));
+                fetch('{{ route('site.filter') }}', { // Update this URL to match your route
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        },
+                        body: JSON.stringify(requestBody)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        renderProducts(data);
+                    })
+                    .catch(error => console.error('Error:', error));
             }
 
             // Event listener for category filter
-            document.querySelectorAll('.category-filter').forEach(function (categoryFilter) {
-                categoryFilter.addEventListener('change', function () {
+            document.querySelectorAll('.category-filter').forEach(function(categoryFilter) {
+                categoryFilter.addEventListener('change', function() {
                     fetchFilteredProducts();
                 });
             });
 
             // Event listener for brand filter
-            document.querySelectorAll('.brand-filter').forEach(function (brandFilter) {
-                brandFilter.addEventListener('change', function () {
+            document.querySelectorAll('.brand-filter').forEach(function(brandFilter) {
+                brandFilter.addEventListener('change', function() {
                     fetchFilteredProducts();
                 });
             });
 
-            document.querySelector('.price-filter-btn').addEventListener('click', function () {
-            fetchFilteredProducts();
-        });
+            document.querySelector('.price-filter-btn').addEventListener('click', function() {
+                fetchFilteredProducts();
+            });
 
 
             // Event listener for tag links
-            document.querySelectorAll('.tag-link').forEach(function (tagLink) {
-                tagLink.addEventListener('click', function (e) {
+            document.querySelectorAll('.tag-link').forEach(function(tagLink) {
+                tagLink.addEventListener('click', function(e) {
                     e.preventDefault();
-                    
+
                     // Remove active class from all tags
                     document.querySelectorAll('.tag-link').forEach(link => {
                         link.classList.remove('active');
                     });
-                    
+
                     // Add active class to clicked tag
                     this.classList.add('active');
-                    
+
                     const tagValue = this.getAttribute('data-value');
                     fetchFilteredProducts(tagValue);
                 });
             });
         });
     </script>
-
 @endpush
-
-
-
-
-
-
-
-

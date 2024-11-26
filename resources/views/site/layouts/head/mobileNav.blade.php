@@ -1,3 +1,7 @@
+@php
+    use App\Models\Category;
+    $categories = Category::all();
+@endphp
 <!-- start navbar that displayed in responsive mood -->
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -65,7 +69,7 @@
                                     </div>
                                     <div class="col-sm-12 col-12">
                                         <a class="btn1 checkOut" href="#">
-                                            Check Out
+                                            CheckOut
                                         </a>
                                     </div>
                                 </div>
@@ -87,11 +91,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item active">
+                <li class="nav-item @if (request()->is('home*')) active @endif">
                     <a class="nav-link" href="{{ route('site.home') }}">Home<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="shop.html">Shop</a>
+                <li class="nav-item @if (request()->is('shop*')) active @endif">
+                    <a class="nav-link" href="{{ route('site.shop') }}">Shop</a>
                 </li>
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="#">
@@ -126,37 +130,29 @@
                         </li>
                     </ul>
                 </li> --}}
-                <li class="nav-item">
+                <li class="nav-item @if (request()->is('category*')) active @endif">
                     <a class="nav-link" href="#">
                         Collection
                         <div class='fa fa-caret-right right'></div>
                     </a>
                     <ul>
-                        <li>
-                            <a href="#">
-                                Men's
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Women's
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Kid's
-                            </a>
-                        </li>
+                        @foreach ($categories as $category)
+                            <li>
+                                <a href="{{ route('site.category.show', $category->name) }}">
+                                    {{ $category->name }}
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="{{ route('site.contact') }}">Contact</a>
+                <li class="nav-item @if (request()->is('contact*')) active @endif">
+                    <a class="nav-link" href="{{ route('site.contact') }}">Contact</a>
                 </li>
                 @auth
-                    <li class="nav-item ">
+                    <li class="nav-item @if (request()->is('shopping-cart*')) active @endif">
                         <a class="nav-link" href="">Shopping Cart</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item @if (request()->is('checkout*')) active @endif">
                         <a class="nav-link" href="">CheckOut</a>
                     </li>
                 @endauth

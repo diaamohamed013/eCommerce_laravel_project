@@ -62,55 +62,23 @@
                     </div>
 
                 </div>
-                <div class="col-lg-2 col-md-12 col-sm-12 col-12">
+                <div class="col-lg-4 col-md-12 col-sm-12 col-12">
                     <div class="information">
                         <h4>Information</h4>
                         <ul>
                             <li>
-                                <a href="#">
-                                    About Us
+                                <a href="{{route('site.home')}}">
+                                    Home
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
-                                    CheckOut
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Contact
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Serivius
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-12 col-sm-12 col-12">
-                    <div class="information">
-                        <h4>My Account</h4>
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    My Account
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Contact
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Shopping Cart
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
+                                <a href="{{route('site.shop')}}">
                                     Shop
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{route('site.contact')}}">
+                                    Contact
                                 </a>
                             </li>
                         </ul>
