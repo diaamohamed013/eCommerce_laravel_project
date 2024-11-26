@@ -1279,7 +1279,11 @@ footer .lowFooter .payment {
     margin-right: 0;
 }
 
-.item-filter ul li:first-child {
+.item-filter ul li a {
+    color: #b2b2b2;
+}
+
+.item-filter ul li a.active {
     color: #171717;
     border-bottom: 2px solid #171717;
 }

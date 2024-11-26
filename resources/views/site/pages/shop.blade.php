@@ -321,8 +321,7 @@
                 if (selectedTag) {
                     requestBody.tag = selectedTag;
                 }
-
-                console.log(requestBody);
+                
                 // AJAX request
                 fetch('{{ route('site.filter') }}', { // Update this URL to match your route
                         method: 'POST',
