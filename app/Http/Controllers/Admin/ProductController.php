@@ -7,6 +7,7 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Size;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('category', 'brand', 'tags')->get();
+        $products = Product::with('category', 'brand', 'tags','sizes')->get();
         return view('admin.pages.products.index', compact('products'));
     }
 
@@ -29,7 +30,8 @@ class ProductController extends Controller
         $categories = Category::get();
         $brands = Brand::get();
         $tags = Tag::get();
-        return view('admin.pages.products.create', compact('categories', 'brands', 'tags'));
+        $sizes = Size::get();
+        return view('admin.pages.products.create', compact('categories', 'brands', 'tags','sizes'));
     }
 
     /**
@@ -38,7 +40,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $data = $request->validated();
-        
+
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = $file->store('products', 'public');
@@ -47,6 +49,7 @@ class ProductController extends Controller
 
         $product = Product::create($data);
         $product->tags()->syncWithoutDetaching($request->tags);
+        $product->sizes()->syncWithoutDetaching($request->sizes);
 
         return redirect()->route('admin.products.index')->with('success', 'Product created successfully');
     }
@@ -67,7 +70,8 @@ class ProductController extends Controller
         $categories = Category::get();
         $brands = Brand::get();
         $tags = Tag::get();
-        return view('admin.pages.products.edit', compact('product', 'categories', 'brands', 'tags'));
+        $sizes = Size::get();
+        return view('admin.pages.products.edit', compact('product', 'categories', 'brands', 'tags','sizes'));
     }
 
     /**
@@ -85,6 +89,7 @@ class ProductController extends Controller
         }
 
         $product->tags()->syncWithoutDetaching($request->tags);
+        $product->sizes()->syncWithoutDetaching($request->sizes);
         $product->update($data);
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully');
     }

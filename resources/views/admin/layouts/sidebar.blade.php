@@ -102,6 +102,29 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item @if (request()->is('sizes*')) menu-is-opening menu-open @endif">
+                    <a href="#" class="nav-link @if (request()->is('sizes*')) active @endif">
+                        <i class="nav-icon fas fa-tags"></i>
+                        <p>
+                            Sizes
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.sizes.create') }}" class="nav-link ml-3 @if (request()->is('sizes/create')) active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>New Size</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.sizes.index') }}" class="nav-link ml-3 @if (request()->is('sizes')) active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Sizes</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item @if (request()->is('brands*')) menu-is-opening menu-open @endif">
                     <a href="#" class="nav-link @if (request()->is('brands*')) active @endif">
                         <i class="nav-icon fas fa-paint-brush"></i>

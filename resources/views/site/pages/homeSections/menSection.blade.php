@@ -41,7 +41,7 @@
                                     @foreach ($product->tags as $tag)
                                         <span class="badge bg-light text-muted py-1 my-1">{{ $tag->tag_name }}</span>
                                     @endforeach
-                                    <a href="#">
+                                    <a href="{{route('site.single-product', $product->id)}}">
                                         <h5>
                                             {{ $product->title }}
                                         </h5>

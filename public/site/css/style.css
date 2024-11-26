@@ -1605,13 +1605,14 @@ footer .lowFooter .payment {
     background-color: #81D742;
 }
 
-.shop .size-item label {
+.shop .size-item a {
     position: relative;
     margin-right: 5px;
     font-size: 16px;
     color: #252525;
     height: 40px;
     width: 47px;
+    display: inline-block;
     border: 1px solid #ebebeb;
     text-align: center;
     line-height: 40px;

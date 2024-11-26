@@ -115,6 +115,22 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="mb-3">
+                                                <label for="">Sizes</label>
+                                                <select name="sizes[]" class="form-control" multiple>
+                                                    @foreach ($sizes as $size)
+                                                        <option @if ($product->sizes->contains($size)) selected @endif
+                                                            value="{{ $size->id }}">
+                                                            {{ $size->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('sizes[]')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="mb-3">
                                                 <label for="">Product Image</label>
                                                 <input type="file" name="image" class="form-control"/>
                                                 @error('image')
