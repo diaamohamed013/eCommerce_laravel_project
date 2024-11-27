@@ -18,14 +18,16 @@
                         </div>
                     </div>
                     <div class="col-lg-8 col-md-7 col-sm-12 col-12">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="What do you need ?">
+                        <div class="input-group" style="position: relative;">
+                            <input type="text" class="form-control" id="global-search" placeholder="What do you need?">
                             <div class="input-group-append">
                                 <button class="btn" type="button">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </div>
                         </div>
+                        <!-- Dropdown for search results -->
+                        <div class="search-results" id="global-search-results" style="display:none;"></div>
                     </div>
                 </div>
             </div>

@@ -87,4 +87,20 @@ class ShopController extends Controller
             'data' => $products->items(),
         ]);
     }
+
+
+    public function search(Request $request)
+    {
+        $request->validate([
+            'query' => 'required|string|min:3',
+        ]);
+
+        $query = $request->input('query');
+        $products = Product::where('title', 'like', "%{$query}%")
+            ->select('id', 'title', 'image', 'price')  // Only return necessary columns
+            ->limit(5)  // Limit results to avoid unnecessary load
+            ->get();
+
+        return response()->json($products);
+    }
 }
