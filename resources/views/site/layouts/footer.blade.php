@@ -149,8 +149,8 @@
                             if (data.length > 0) {
                                 let html = '';
                                 data.forEach(function(product) {
-                                    html += `<a href="shop/single-product/${product.id}" class="search-item" data-id="${product.id}">
-                                    <img src="${product.image}" alt="${product.title}" width="50" height="50">
+                                    html += `<a href="/shop/single-product/${product.id}" class="search-item" data-id="${product.id}">
+                                    <img src="/${product.image}" alt="${product.title}" width="50" height="50">
                                     <span>${product.title}</span> - $${product.price}
                                 </a>`;
                                 });
