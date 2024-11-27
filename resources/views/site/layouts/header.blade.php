@@ -16,6 +16,29 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('site/css/style.css') }}">
+    <style>
+    .search-results {
+        border: 1px solid #ccc;
+        max-height: 200px;
+        overflow-y: auto;
+        position: absolute;
+        width: 100%;
+        background-color: white;
+        z-index: 10;
+        border-radius: 5px;
+        }
+        .search-item {
+        padding: 10px;
+        cursor: pointer;
+        width: 100%;
+        display: block;
+        color: black;
+        }
+    
+        .search-item:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
 </head>
 
 <body>

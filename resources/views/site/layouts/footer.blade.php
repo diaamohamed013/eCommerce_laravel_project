@@ -133,6 +133,48 @@
     @stack('js')
     <script src="{{ asset('site/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('site/js/main.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            // Trigger search when user types in the input field
+            $('#global-search').on('input', function() {
+                let query = $(this).val();
+
+                // Check if query length is at least 3 characters
+                if (query.length >= 3) {
+                    $.ajax({
+                        url: '/search-products', // Ensure this route is defined globally
+                        method: 'GET',
+                        data: { query: query },
+                        success: function(data) {
+                            if (data.length > 0) {
+                                let html = '';
+                                data.forEach(function(product) {
+                                    html += `<a href="shop/single-product/${product.id}" class="search-item" data-id="${product.id}">
+                                    <img src="${product.image}" alt="${product.title}" width="50" height="50">
+                                    <span>${product.title}</span> - $${product.price}
+                                </a>`;
+                                });
+                                $('#global-search-results').html(html).show();
+                            } else {
+                                $('#global-search-results').html('<div class="search-item">No products found</div>').show();
+                            }
+                        },
+                        error: function() {
+                            $('#global-search-results').html('<div class="search-item">Error occurred</div>').show();
+                        }
+                    });
+                } else {
+                    $('#global-search-results').hide();
+                }
+            });
+
+            // Handle click event on search item
+            $(document).on('click', '.search-item', function() {
+                $('#global-search').val($(this).text());
+                $('#global-search-results').hide();
+            });
+        });
+    </script>
     </body>
 
     </html>

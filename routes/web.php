@@ -38,4 +38,5 @@ Route::as('site.')->group(function(){
     Route::get('shop/single-product/{product}', [ShopController::class, 'singleProduct'])->name('single-product');
     Route::post('shop/filter', [ShopController::class, 'filter'])->name('filter');
     Route::get('category/{category}', [ShopController::class, 'show'])->name('category.show');
+    Route::get('search-products', [ShopController::class, 'search'])->name('products.search');
 });
