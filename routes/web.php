@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Site\CartController;
 use App\Http\Controllers\Site\HomeController;
 use App\Http\Controllers\Site\ShopController;
 use Illuminate\Support\Facades\Auth;
@@ -39,4 +40,11 @@ Route::as('site.')->group(function(){
     Route::post('shop/filter', [ShopController::class, 'filter'])->name('filter');
     Route::get('category/{category}', [ShopController::class, 'show'])->name('category.show');
     Route::get('search-products', [ShopController::class, 'search'])->name('products.search');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/store', [CartController::class, 'addToCart'])->name('cart.store');
+    Route::put('/cart/increase-quantity/{rowId}', [CartController::class, 'increase_cart_qty'])->name('cart.qty.increase');
+    Route::put('/cart/decrease-quantity/{rowId}', [CartController::class, 'decrease_cart_qty'])->name('cart.qty.decrease');
+    Route::delete('/cart/remove/{rowId}', [CartController::class, 'remove_item'])->name('cart.item.remove');
+    Route::delete('/cart/destroy', [CartController::class, 'remove_cart'])->name('cart.destroy');
+
 });

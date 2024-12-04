@@ -1811,7 +1811,7 @@ footer .lowFooter .payment {
     background-color: #e7ab3c;
 }
 
-.shop-card .shop-pic ul li a {
+.shop-card .shop-pic ul li a, .shop-card .shop-pic ul li form  {
     display: block;
     color: #fff;
     padding: 16px 12px 12px 11px;
@@ -2319,14 +2319,14 @@ of blog and shop pages */
     font-size: 22px;
 }
 
-.shopcart table form {
+.shopcart table form, .shopcart-qty form {
     width: 130px;
     margin: 0 auto;
     text-align: center;
     border: 2px solid #ebebeb;
 }
 
-.shopcart table form .value-button {
+.shopcart .value-button, .shopcart-qty .value-button {
     display: inline-block;
     color: #b2b2b2;
     font-size: 20px;
@@ -2339,15 +2339,15 @@ of blog and shop pages */
     user-select: none;
 }
 
-.shopcart table form .value-button:hover {
+.shopcart .value-button:hover, .shopcart-qty .value-button:hover {
     cursor: pointer;
 }
 
-.shopcart table form #decrease {
+.shopcart #decrease, .shopcart-qty #decrease {
     margin-right: -4px;
 }
 
-.shopcart table form #increase {
+.shopcart #increase, .shopcart-qty #increase {
     margin-left: -4px;
 }
 
@@ -2356,7 +2356,7 @@ of blog and shop pages */
     padding: 0px;
 }
 
-.shopcart table form input#number {
+.shopcart input#number, .shopcart-qty input#number {
     text-align: center;
     border: none;
     margin: 0px;
@@ -2375,9 +2375,9 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .shopcart .cartbuttons .btn2 {
-    color: #b2b2b2;
-    border: 2px solid #ebebeb;
-    background: #ffffff;
+    color: #fff;
+    border: 2px solid transparent;
+    background: rgba(231, 156, 17, 0.863);
     margin-right: 8px;
     padding: 12px 20px 12px 20px;
     margin-bottom: 10px;
@@ -2429,13 +2429,8 @@ input[type=number]::-webkit-outer-spin-button {
     margin-bottom: 0;
 }
 
-.shopcart .carttotal ul li:first-child {
-    border-bottom: 1px solid #ffffff;
+.shopcart .carttotal ul li {
     padding-bottom: 14px;
-}
-
-.shopcart .carttotal ul li:last-child {
-    padding-top: 10px;
 }
 
 .shopcart .carttotal ul li span {

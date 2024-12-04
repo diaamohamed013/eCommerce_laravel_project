@@ -111,13 +111,13 @@
                                 <option value>Show: </option>
                             </select>
                             <!-- <div class="show default">
-                                                        <span>Show:</span>
-                                                        <ul>
-                                                            <li>
-                                                                Show:
-                                                            </li>
-                                                        </ul>
-                                                    </div> -->
+                                                                    <span>Show:</span>
+                                                                    <ul>
+                                                                        <li>
+                                                                            Show:
+                                                                        </li>
+                                                                    </ul>
+                                                                </div> -->
                             <div class="clr"></div>
                         </div>
                     </div>
@@ -135,9 +135,23 @@
                                         </div>
                                         <ul>
                                             <li>
-                                                <a href="#">
-                                                    <i class="fas fa-shopping-cart text-white"></i>
-                                                </a>
+                                                @if (Cart::instance('cart')->content()->where('id', $product->id)->count() > 0)
+                                                    <a href="{{ route('site.cart.index') }}">
+                                                        <i class="fas fa-shopping-basket  text-white"></i>
+                                                    </a>
+                                                @else
+                                                    <form method="POST" action="{{ route('site.cart.store') }}">
+                                                        @csrf
+                                                        <input type="hidden" name="id" value="{{ $product->id }}">
+                                                        <input type="hidden" name="stock_quantity" value="1">
+                                                        <input type="hidden" name="title" value="{{ $product->title }}">
+                                                        <input type="hidden" name="price"
+                                                            value="{{ $product->sale_percentage == '' ? $product->price : $product->sale_percentage }}">
+                                                        <button class="addCart btn p-0" type="submit">
+                                                            <i class="fas fa-shopping-cart text-white"></i>
+                                                        </button>
+                                                    </form>
+                                                @endif
                                             </li>
                                             <li>
                                                 <a href="{{ route('site.single-product', $product->id) }}">
@@ -321,7 +335,7 @@
                 if (selectedTag) {
                     requestBody.tag = selectedTag;
                 }
-                
+
                 // AJAX request
                 fetch('{{ route('site.filter') }}', { // Update this URL to match your route
                         method: 'POST',
