@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SizeController;
@@ -34,5 +35,6 @@ Route::as('admin.')->group(function () {
         Route::resource('products', ProductController::class);
         Route::resource('tags', TagController::class);
         Route::resource('sizes', SizeController::class);
+        Route::resource('coupons', CouponController::class);
     });
 });

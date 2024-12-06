@@ -10,76 +10,13 @@
                 <i class="fal fa-heart ml-3">
                     <span class="one">1</span>
                 </i>
-                <i class="fal fa-shopping-bag ml-3 mr-3">
-                    <span class="one">3</span>
-
-                    <!-- start div that will be showen when hover over shopping bag icon -->
-                    <div class="shoppingHover">
-                        <div class="container border-bottom">
-                            <div class="row">
-                                <div class="lg-2 col-md-2 col-sm-4 col-4">
-                                    <img src="{{ asset('site/img/download.webp') }}">
-                                </div>
-                                <div class="col-lg-8 col-md-8 col-sm-6 col-6">
-                                    <span>
-                                        $60.00 x 1
-                                    </span>
-                                    <p class="text-wrap">
-                                        Kabino Bedside Table
-                                    </p>
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-2">
-                                    <i class="fal fa-times"></i>
-                                </div>
-                            </div>
-                            <div class="row py-3">
-                                <div class="lg-2 col-md-2 col-sm-4 col-4">
-                                    <img src="{{ asset('site/img/download (1).webp') }}">
-                                </div>
-                                <div class="col-lg-8 col-md-8 col-sm-6 col-6">
-                                    <span>
-                                        $60.00 x 1
-                                    </span>
-                                    <p class="text-wrap">
-                                        Kabino Bedside Table
-                                    </p>
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2 col-2">
-                                    <i class="fal fa-times"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="selectTotal p-3">
-                            <div class="container">
-                                <span>
-                                    TOTAL:
-                                </span>
-                                <span>
-                                    $120.00
-                                </span>
-                            </div>
-                        </div>
-                        <div class="selectButton">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="cl-sm-12 col-12">
-                                        <a class="btn1 viewCard" href="#">
-                                            View Card
-                                        </a>
-                                    </div>
-                                    <div class="col-sm-12 col-12">
-                                        <a class="btn1 checkOut" href="#">
-                                            CheckOut
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end div that will be showen when hover over shopping bag icon -->
-
-                </i>
-                <span>$150.00</span>
+                <a class="btn1 viewCard text-dark" href="{{ route('site.cart.index') }}">
+                    <i class="fal fa-shopping-bag ml-3 mr-3">
+                        <span class="one cartCount">
+                            {{ Cart::instance('cart')->content()->count() }}
+                        </span>
+                    </i>
+                </a>
             </div>
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -149,8 +86,8 @@
                     <a class="nav-link" href="{{ route('site.contact') }}">Contact</a>
                 </li>
                 @auth
-                    <li class="nav-item @if (request()->is('shopping-cart*')) active @endif">
-                        <a class="nav-link" href="">Shopping Cart</a>
+                    <li class="nav-item @if (request()->is('cart*')) active @endif">
+                        <a class="nav-link" href="{{ route('site.cart.index') }}">Shopping Cart</a>
                     </li>
                     <li class="nav-item @if (request()->is('checkout*')) active @endif">
                         <a class="nav-link" href="">CheckOut</a>
