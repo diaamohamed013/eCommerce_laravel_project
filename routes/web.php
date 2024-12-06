@@ -46,5 +46,6 @@ Route::as('site.')->group(function(){
     Route::put('/cart/decrease-quantity/{rowId}', [CartController::class, 'decrease_cart_qty'])->name('cart.qty.decrease');
     Route::delete('/cart/remove/{rowId}', [CartController::class, 'remove_item'])->name('cart.item.remove');
     Route::delete('/cart/destroy', [CartController::class, 'remove_cart'])->name('cart.destroy');
-
+    Route::post('/cart/apply-coupon', [CartController::class, 'apply_coupon_code'])->name('cart.coupon.apply');
+    Route::delete('/cart/remove-coupon', [CartController::class, 'remove_coupon_code'])->name('cart.coupon.remove');
 });

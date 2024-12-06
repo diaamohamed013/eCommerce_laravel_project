@@ -40,11 +40,9 @@
                         </i>
                         <a class="btn1 viewCard text-dark" href="{{ route('site.cart.index') }}">
                             <i class="fal fa-shopping-bag ml-3 mr-3">
-                                @if (Cart::instance('cart')->content()->count() > 0)
-                                    <span class="one">
-                                        {{ Cart::instance('cart')->content()->count() }}
-                                    </span>
-                                @endif
+                                <span class="one cartCount">
+                                    {{ Cart::instance('cart')->content()->count() }}
+                                </span>
                             </i>
                         </a>
                     </div>

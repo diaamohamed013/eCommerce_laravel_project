@@ -26,13 +26,14 @@
                                         sale
                                     </div>
                                     <ul>
-                                        <li>
+                                        <li class="cartIcon">
                                             @if (Cart::instance('cart')->content()->where('id', $product->id)->count() > 0)
                                                 <a href="{{ route('site.cart.index') }}">
                                                     <i class="fas fa-shopping-basket  text-white"></i>
                                                 </a>
                                             @else
-                                                <form method="POST" action="{{ route('site.cart.store') }}">
+                                                <form method="POST" action="{{ route('site.cart.store') }}"
+                                                    class="add-to-cart-form">
                                                     @csrf
                                                     <input type="hidden" name="id" value="{{ $product->id }}">
                                                     <input type="hidden" name="stock_quantity" value="1">

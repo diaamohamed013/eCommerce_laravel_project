@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('site/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1-rc.1/css/select2.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.0/nouislider.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="{{ asset('site/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('site/css/owl.theme.green.css') }}">
     @stack('css')
@@ -34,7 +35,7 @@
         display: block;
         color: black;
         }
-    
+
         .search-item:hover {
             background-color: #f0f0f0;
         }

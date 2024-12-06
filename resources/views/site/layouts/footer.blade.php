@@ -130,6 +130,7 @@
     <script src="{{ asset('site/js/popper.min.js') }}"></script>
     <script src="{{ asset('site/js/bootstrap.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1-rc.1/js/select2.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     @stack('js')
     <script src="{{ asset('site/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('site/js/main.js') }}"></script>

@@ -16,13 +16,14 @@
                                         sale
                                     </div>
                                     <ul>
-                                        <li>
+                                        <li class="cartIcon">
                                             @if (Cart::instance('cart')->content()->where('id', $product->id)->count() > 0)
                                                 <a href="{{ route('site.cart.index') }}">
                                                     <i class="fas fa-shopping-basket  text-white"></i>
                                                 </a>
                                             @else
-                                                <form method="POST" action="{{ route('site.cart.store') }}">
+                                                <form method="POST" action="{{ route('site.cart.store') }}"
+                                                    class="add-to-cart-form">
                                                     @csrf
                                                     <input type="hidden" name="id" value="{{ $product->id }}">
                                                     <input type="hidden" name="stock_quantity" value="1">
@@ -87,3 +88,78 @@
     </div>
 </section>
 <!-- end section of women products -->
+@push('js')
+    <script>
+        $(document).on('click', '.addCart', function(e) {
+            e.preventDefault();
+            let button = $(this);
+            let form = button.closest('.add-to-cart-form'); // Find the closest form
+            let formData = form.serialize(); // Serialize form data
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '{{ route('site.cart.store') }}', // Update with your route name
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    if (response.status === 'success') {
+                        Toastify({
+                            text: response.message,
+                            className: "success",
+                            duration: 3000,
+                            newWindow: true,
+                            close: true,
+                            gravity: "top", // `top` or `bottom`
+                            position: "left", // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            style: {
+                                background: "linear-gradient(to right, #00b09b, #96c93d)",
+                            },
+                            onClick: function() {} // Callback after click
+                        }).showToast();
+                        $('.cartCount').html(response.cartCount); // update cart count in the header
+                        button.closest('.cartIcon').html(`
+                            <a href="{{ route('site.cart.index') }}">
+                                <i class="fas fa-shopping-basket  text-white"></i>
+                            </a>
+                        `);
+                    }
+                },
+                error: function(xhr) {
+                    Toastify({
+                        text: "Someting went wrong, Please try again !",
+                        className: "success",
+                        duration: 3000,
+                        newWindow: true,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: "left", // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        style: {
+                            background: "#dc3741",
+                        },
+                        onClick: function() {} // Callback after click
+                    }).showToast();
+                    button.closest('.cartIcon').html(`
+                            <form method="POST" action="{{ route('site.cart.store') }}"
+                                                        class="add-to-cart-form">
+                                                        @csrf
+                                                        <input type="hidden" name="id" value="{{ $product->id }}">
+                                                        <input type="hidden" name="stock_quantity" value="1">
+                                                        <input type="hidden" name="title" value="{{ $product->title }}">
+                                                        <input type="hidden" name="price"
+                                                            value="{{ $product->sale_percentage == '' ? $product->price : $product->sale_percentage }}">
+                                                        <button class="addCart btn p-0" type="submit">
+                                                            <i class="fas fa-shopping-cart text-white"></i>
+                                                        </button>
+                                                    </form>
+                    `);
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    </script>
+@endpush
