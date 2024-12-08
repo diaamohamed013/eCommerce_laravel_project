@@ -172,6 +172,12 @@
                     </ul>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('admin.social.index') }}" class="nav-link @if (request()->is('social*')) active @endif">
+                        <i class="fas fa-share-alt nav-icon"></i>
+                        <p>Social</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ url('roles') }}" class="nav-link @if (request()->is('roles*')) active @endif">
                         <i class="fas fa-thumbtack nav-icon"></i>
                         <p>Roles</p>

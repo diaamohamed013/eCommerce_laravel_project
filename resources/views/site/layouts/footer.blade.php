@@ -47,18 +47,26 @@
                         </span>
                     </div>
                     <div class="footerSocial pt-5">
-                        <a href="#">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#">
-                            <i class="fab fa-pinterest-p"></i>
-                        </a>
+                        @if (!empty($facebook))
+                            <a href="https://{{$facebook->facebook}}" target="_b">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        @endif
+                        @if (!empty($instagram))
+                            <a href="https://{{ $instagram->instagram }}" target="_b">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        @endif
+                        @if (!empty($twitter))
+                            <a href="https://{{ $twitter->twitter }}" target="_b">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        @endif
+                        @if (!empty($youtube))
+                            <a href="https://{{ $youtube->youtube }}" target="_b">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        @endif
                     </div>
 
                 </div>
@@ -67,17 +75,17 @@
                         <h4>Information</h4>
                         <ul>
                             <li>
-                                <a href="{{route('site.home')}}">
+                                <a href="{{ route('site.home') }}">
                                     Home
                                 </a>
                             </li>
                             <li>
-                                <a href="{{route('site.shop')}}">
+                                <a href="{{ route('site.shop') }}">
                                     Shop
                                 </a>
                             </li>
                             <li>
-                                <a href="{{route('site.contact')}}">
+                                <a href="{{ route('site.contact') }}">
                                     Contact
                                 </a>
                             </li>
@@ -110,7 +118,7 @@
                             <span>
                                 <i class="fal fa-heart"></i>
                             </span>
-                            by <a href="#">Colorlib</a>
+                            by <a href="#">US</a>
                         </span>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12 col-12">
@@ -145,7 +153,9 @@
                     $.ajax({
                         url: '/search-products', // Ensure this route is defined globally
                         method: 'GET',
-                        data: { query: query },
+                        data: {
+                            query: query
+                        },
                         success: function(data) {
                             if (data.length > 0) {
                                 let html = '';
@@ -157,11 +167,14 @@
                                 });
                                 $('#global-search-results').html(html).show();
                             } else {
-                                $('#global-search-results').html('<div class="search-item">No products found</div>').show();
+                                $('#global-search-results').html(
+                                        '<div class="search-item">No products found</div>')
+                                    .show();
                             }
                         },
                         error: function() {
-                            $('#global-search-results').html('<div class="search-item">Error occurred</div>').show();
+                            $('#global-search-results').html(
+                                '<div class="search-item">Error occurred</div>').show();
                         }
                     });
                 } else {

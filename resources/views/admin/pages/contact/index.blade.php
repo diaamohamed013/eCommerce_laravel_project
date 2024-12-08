@@ -61,6 +61,10 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-12">
+                        {{ $messages->links('pagination::bootstrap-5') }}
+                    </div>
                 </div>
             </div>
         </section>

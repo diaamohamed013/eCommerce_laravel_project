@@ -83,9 +83,12 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-
                             </div>
                         </div>
+                    </div>
+
+                    <div class="col-12">
+                        {{ $products->links('pagination::bootstrap-5') }}
                     </div>
                 </div>
             </div>
