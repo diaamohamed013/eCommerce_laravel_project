@@ -11,10 +11,7 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-5">
                         <div class="cate">
-                            <button class="btn text-left">
-                                all category
-                                <i class="fal fa-angle-down"></i>
-                            </button>
+                            <a href="{{ route('site.shop') }}" class="btn text-left">all category</a>
                         </div>
                     </div>
                     <div class="col-lg-8 col-md-7 col-sm-12 col-12">
