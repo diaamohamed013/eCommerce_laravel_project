@@ -35,6 +35,7 @@ Route::as('site.')->group(function(){
     Route::get('contact-us', [HomeController::class, 'contact'])->name('contact');
     Route::post('contact-us', [HomeController::class, 'sendMessage'])->name('contact.store');
     Route::get('forbidden', [HomeController::class, 'inCorrectRole'])->name('forbidden');
+    Route::get('notFound', [HomeController::class, 'NotFoundPage'])->name('notFound');
     Route::get('shop', [ShopController::class, 'index'])->name('shop');
     Route::get('shop/single-product/{product}', [ShopController::class, 'singleProduct'])->name('single-product');
     Route::post('shop/filter', [ShopController::class, 'filter'])->name('filter');

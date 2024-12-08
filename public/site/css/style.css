@@ -25,26 +25,13 @@ ul {
     list-style: none;
 }
 
-header .lowHead .cate .btn {
+header .lowHead .cate {
+    padding: 6px 12px;
+}
+
+header .lowHead .cate span {
     text-transform: capitalize;
     position: relative;
-}
-
-header .lowHead .cate .btn::before {
-    position: absolute;
-    right: -45px;
-    top: 10px;
-    width: 1px;
-    height: 20px;
-    background: #e5e5e5;
-    content: "";
-}
-
-header .lowHead .cate .btn .fa-angle-down {
-    position: absolute;
-    top: 12px;
-    right: -20px;
-    color: #b2b2b2;
 }
 
 /* custom styles for UiSlider */
@@ -1811,7 +1798,7 @@ footer .lowFooter .payment {
     background-color: #e7ab3c;
 }
 
-.shop-card .shop-pic ul li a, .shop-card .shop-pic ul li form  {
+.shop-card .shop-pic ul li a, .shop-card .shop-pic ul li form {
     display: block;
     color: #fff;
     padding: 16px 12px 12px 11px;

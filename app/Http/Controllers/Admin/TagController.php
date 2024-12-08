@@ -11,6 +11,7 @@ class TagController extends Controller
     /**
      * Display a listing of the resource.
      */
+    
     public function index()
     {
         $tags = Tag::get();

@@ -11,6 +11,7 @@ class SizeController extends Controller
     /**
      * Display a listing of the resource.
      */
+    
     public function index()
     {
         $sizes = Size::get();

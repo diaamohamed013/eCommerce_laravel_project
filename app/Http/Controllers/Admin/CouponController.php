@@ -11,6 +11,7 @@ class CouponController extends Controller
     /**
      * Display a listing of the resource.
      */
+    
     public function index()
     {
         $coupons = Coupon::orderBy('expire_date','DESC')->paginate(10);

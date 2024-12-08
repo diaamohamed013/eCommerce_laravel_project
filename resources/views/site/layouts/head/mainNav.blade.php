@@ -60,9 +60,6 @@
                 <a class="nav-link" href="{{ route('site.contact') }}">CONTACT</a>
             </li>
             @auth
-                <li class="nav-item1 @if (request()->is('cart*')) active1 @endif">
-                    <a class="nav-link" href="{{route('site.cart.index')}}">Shopping Cart</a>
-                </li>
                 <li class="nav-item1 @if (request()->is('checkout*')) active1 @endif">
                     <a class="nav-link" href="">CheckOut</a>
                 </li>
