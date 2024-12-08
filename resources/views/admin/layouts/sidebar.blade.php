@@ -56,6 +56,29 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item @if (request()->is('coupons*')) menu-is-opening menu-open @endif">
+                    <a href="#" class="nav-link @if (request()->is('coupons*')) active @endif">
+                        <i class="nav-icon fas fa-clipboard-check"></i>
+                        <p>
+                            Coupons
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.coupons.create') }}" class="nav-link ml-3 @if (request()->is('coupons/create')) active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>New Coupon</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.coupons.index') }}" class="nav-link ml-3 @if (request()->is('coupons')) active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Coupons</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item @if (request()->is('categories*')) menu-is-opening menu-open @endif">
                     <a href="#" class="nav-link @if (request()->is('categories*')) active @endif">
                         <i class="nav-icon fas fa-shopping-bag"></i>
@@ -147,6 +170,12 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.social.index') }}" class="nav-link @if (request()->is('social*')) active @endif">
+                        <i class="fas fa-share-alt nav-icon"></i>
+                        <p>Social</p>
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('roles') }}" class="nav-link @if (request()->is('roles*')) active @endif">
