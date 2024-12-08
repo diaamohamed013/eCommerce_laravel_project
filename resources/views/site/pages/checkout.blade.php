@@ -15,7 +15,7 @@
                 <div class="col-lg-6 col-md-12">
                     <div class="details">
                         <div class="infoLogin">
-                            <a href="login.html">
+                            <a href="{{ route('site.login') }}">
                                 Click Here To Login
                             </a>
                         </div>
@@ -137,14 +137,21 @@
                                 <div class="payment">
                                     <div class="Cheque">
                                         <label>
-                                            Cheque payment
+                                            Cash On Delivery
                                             <input type="radio" name="pay">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
                                     <div class="Cheque">
                                         <label>
-                                            PayPal
+                                            Stripe
+                                            <input type="radio" name="pay">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="Cheque">
+                                        <label>
+                                            Card
                                             <input type="radio" name="pay">
                                             <span class="checkmark"></span>
                                         </label>

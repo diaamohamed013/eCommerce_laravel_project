@@ -11,13 +11,7 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-5">
                         <div class="cate">
-<<<<<<< HEAD
                             <a href="{{ route('site.shop') }}" class="btn text-left">all category</a>
-=======
-                            <span class="text-left">
-                                Find Your Product
-                            </button>
->>>>>>> master
                         </div>
                     </div>
                     <div class="col-lg-8 col-md-7 col-sm-12 col-12">

@@ -187,7 +187,7 @@
                                         </span>
                                     </li>
                                 </ul>
-                                <a href="#" class="proceed-btn">PROCEED TO CHECK OUT</a>
+                                <a href="{{  route('site.cart.checkout') }}" class="proceed-btn">PROCEED TO CHECK OUT</a>
                             </div>
                         @endif
                     </div>

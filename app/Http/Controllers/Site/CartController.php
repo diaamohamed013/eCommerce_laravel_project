@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use App\Models\Coupon;
 use App\Models\Product;
+use App\Models\Address;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Surfsidemedia\Shoppingcart\Facades\Cart;
 
 class CartController extends Controller
@@ -185,5 +187,17 @@ class CartController extends Controller
         session()->forget('coupon');
         session()->forget('discounts');
         return back()->with('success', 'Coupon has been removed!');
+    }
+
+
+    public function checkout()
+    {
+        if(!Auth::check()){
+            return redirect()->route('login');
+        }
+        
+        $address = Address::where('user_id', Auth::user()->id)->first();
+        return view('site.pages.checkout', compact('address'));
+
     }
 }
