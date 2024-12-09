@@ -197,7 +197,10 @@ class CartController extends Controller
         }
         
         $address = Address::where('user_id', Auth::user()->id)->first();
-        return view('site.pages.checkout', compact('address'));
+
+        $this->validateDiscounts();
+        $items = Cart::instance('cart')->content();
+        return view('site.pages.checkout', compact('address', 'items'));
 
     }
 }

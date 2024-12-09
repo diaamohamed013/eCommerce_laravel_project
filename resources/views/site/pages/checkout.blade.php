@@ -11,14 +11,86 @@
     <!-- start section for checkout page -->
     <section class="checkorder py-5">
         <div class="container">
+            {{-- <div class="row">
+                <div class="col-lg-12">
+                    <div class="carttable">
+                        <table>
+                            <thead class="text-uppercase">
+                                <tr>
+                                    <th>image</th>
+                                    <th>product name</th>
+                                    <th>price</th>
+                                    <th>quantity</th>
+                                    <th>total</th>
+                                    <th><i class="fal fa-times"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($items as $item)
+                                    <tr class="cart-item">
+                                        <td>
+                                            <img src="{{ asset($item->model->image) }}" alt="{{ $item->name }}"
+                                                width="120px" height="120px">
+                                        </td>
+                                        <td>
+                                            <h5>
+                                                {{ $item->name }}
+                                            </h5>
+                                        </td>
+                                        <td>
+                                            <span>${{ $item->price }}</span>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <form style="width: auto; margin: unset;" method="POST"
+                                                    action="{{ route('site.cart.qty.decrease', ['rowId' => $item->rowId]) }}">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <div class="value-button decreaseQty" id="decrease"
+                                                        value="Decrease Value">-
+                                                    </div>
+                                                </form>
+                                                <input type="number" id="number" value="{{ $item->qty }}"
+                                                    min="1" name="stock_quantity" />
+                                                <form style="width: auto; margin: unset;" method="POST"
+                                                    action="{{ route('site.cart.qty.increase', ['rowId' => $item->rowId]) }}">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <div class="value-button increaseQty" id="increase"
+                                                        value="Increase Value">+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span>${{ $item->subtotal() }}</span>
+                                        </td>
+                                        <td>
+                                            <form class="remove-item-form" style="width: auto; border: unset;"
+                                                method="POST"
+                                                action="{{ route('site.cart.item.remove', ['rowId' => $item->rowId]) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger bg-danger">
+                                                    <i class="fal fa-times px-3"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> --}}
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <div class="details">
-                        <div class="infoLogin">
-                            <a href="{{ route('site.login') }}">
+                        {{-- <div class="infoLogin">
+                            <a href="login.html">
                                 Click Here To Login
                             </a>
-                        </div>
+                        </div> --}}
                         <h4 class="mb-5">
                             Biiling Details
                         </h4>
@@ -99,52 +171,78 @@
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <div class="orderProd">
-                        <div class="coupon">
-                            <input type="text" placeholder="Enter Your Coupon Code">
+                        <div class="discount coupon">
+                            @if (!Session::has('coupon'))
+                                <h6>
+                                    discount codes
+                                </h6>
+                                <form method="POST" action="{{ route('site.cart.coupon.apply') }}">
+                                    @csrf
+                                    <input type="text" placeholder="Enter Your Codes" name="coupon_code">
+                                    <button type="submit" class="discountbtn">
+                                        APPLY
+                                    </button>
+                                </form>
+                            @else
+                                <form class="position-relative bg-body" method="POST"
+                                    action="{{ route('site.cart.coupon.remove') }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="text" name="coupon_code" placeholder="Enter Your Codes"
+                                        value="{{ session()->get('coupon')['code'] }} Applied!" readonly>
+                                    <button type="submit" class="discountbtn">
+                                        REMOVE COUPON
+                                    </button>
+                                </form>
+                            @endif
+                            @if (Session::has('error'))
+                                <p class="text-danger">
+                                    {{ Session::get('error') }}
+                                </p>
+                            @endif
                         </div>
                         <div class="order">
                             <h4 class="mb-5">
                                 Your Order
                             </h4>
+                            @if (Session::has('discounts'))
                             <div class="orderTotal">
                                 <ul>
-                                    <li class="text-uppercase">
-                                        Product
-                                        <span>Total</span>
-                                    </li>
-                                    <li class="combination">
-                                        Combination X 1
-                                        <span>$60.00</span>
-                                    </li>
-                                    <li class="combination">
-                                        Combination X 1
-                                        <span>$60.00</span>
-                                    </li>
-                                    <li class="combination">
-                                        Combination X 1
-                                        <span>$120.00</span>
-                                    </li>
-                                    <li class="combination">
+                                    <li>
                                         Subtotal
-                                        <span>$240.00</span>
+                                        <span id="subtotal">
+                                            ${{ Cart::instance('cart')->subtotal() }}
+                                        </span>
                                     </li>
-                                    <li class="totalPrice">
+                                    <li>
+                                        Discount {{ Session('coupon')['code'] }}
+                                        <span id="discount">
+                                            ${{ Session('discounts')['discount'] }}
+                                        </span>
+                                    </li>
+                                    <li>
+                                        Subtotal After Discount
+                                        <span id="subAfterDiscount">
+                                            ${{ Session('discounts')['subtotal'] }}
+                                        </span>
+                                    </li>
+                                    <li>
+                                        VAT
+                                        <span id="vat">
+                                            ${{ Session('discounts')['tax'] }}
+                                        </span>
+                                    </li>
+                                    <li>
                                         Total
-                                        <span>$240.00</span>
+                                        <span id="total">
+                                            ${{ Session('discounts')['total'] }}
+                                        </span>
                                     </li>
-                                    <div class="clr"></div>
                                 </ul>
                                 <div class="payment">
                                     <div class="Cheque">
                                         <label>
-                                            Cash On Delivery
-                                            <input type="radio" name="pay">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                    <div class="Cheque">
-                                        <label>
-                                            Stripe
+                                            COD
                                             <input type="radio" name="pay">
                                             <span class="checkmark"></span>
                                         </label>
@@ -156,6 +254,13 @@
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
+                                    <div class="Cheque">
+                                        <label>
+                                            Stipe
+                                            <input type="radio" name="pay">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
                                 </div>
                                 <div class="orderBtn my-4 text-center">
                                     <button class="btn btn1 text-uppercase">
@@ -163,6 +268,59 @@
                                     </button>
                                 </div>
                             </div>
+                            @else
+                            <div class="orderTotal">
+                                <ul>
+                                    <li>
+                                        Subtotal
+                                        <span id="subtotal">
+                                            ${{ Cart::instance('cart')->subtotal() }}
+                                        </span>
+                                    </li>
+                                    <li>
+                                        VAT
+                                        <span id="vat">
+                                            ${{ Cart::instance('cart')->tax() }}
+                                        </span>
+                                    </li>
+                                    <li>
+                                        Total
+                                        <span id="total">
+                                            ${{ Cart::instance('cart')->total() }}
+                                        </span>
+                                    </li>
+                                    <div class="clr"></div>
+                                </ul>
+                                <div class="payment">
+                                    <div class="Cheque">
+                                        <label>
+                                            COD
+                                            <input type="radio" name="pay">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="Cheque">
+                                        <label>
+                                            Card
+                                            <input type="radio" name="pay">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="Cheque">
+                                        <label>
+                                            Stipe
+                                            <input type="radio" name="pay">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="orderBtn my-4 text-center">
+                                    <button class="btn btn1 text-uppercase">
+                                        place order
+                                    </button>
+                                </div>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -170,5 +328,4 @@
         </div>
     </section>
     <!-- end section for checkout page -->
-
 @endsection
