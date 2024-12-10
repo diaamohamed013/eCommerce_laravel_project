@@ -32,10 +32,10 @@ class SocialController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'facebook' => 'required|string',
-            'twitter' => 'required|string',
-            'instagram' => 'required|string',
-            'youtube' => 'required|string',
+            'facebook' => 'nullable|string',
+            'twitter' => 'nullable|string',
+            'instagram' => 'nullable|string',
+            'youtube' => 'nullable|string',
         ]);
 
         Setting::create($data);

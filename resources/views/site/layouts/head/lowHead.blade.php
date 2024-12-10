@@ -13,7 +13,7 @@
                         <div class="cate">
                             <span class="text-left">
                                 Find Your Product
-                                </button>
+                            </span>
                         </div>
                     </div>
                     <div class="col-lg-8 col-md-7 col-sm-12 col-12">

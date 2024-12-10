@@ -48,22 +48,22 @@
                     </div>
                     <div class="footerSocial pt-5">
                         @if (!empty($facebook))
-                            <a href="https://{{$facebook->facebook}}" target="_b">
+                            <a href="https://{{$facebook->facebook}}" target="_blank">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
                         @endif
-                        @if (!empty($instagram))
-                            <a href="https://{{ $instagram->instagram }}" target="_b">
-                                <i class="fab fa-instagram"></i>
-                            </a>
+                        @if (!empty($instagram->instagram))
+                        <a href="https://{{ $instagram->instagram }}" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
                         @endif
                         @if (!empty($twitter))
-                            <a href="https://{{ $twitter->twitter }}" target="_b">
+                            <a href="https://{{ $twitter->twitter }}" target="_blank">
                                 <i class="fab fa-twitter"></i>
                             </a>
                         @endif
                         @if (!empty($youtube))
-                            <a href="https://{{ $youtube->youtube }}" target="_b">
+                            <a href="https://{{ $youtube->youtube }}" target="_blank">
                                 <i class="fab fa-youtube"></i>
                             </a>
                         @endif

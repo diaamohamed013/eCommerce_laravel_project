@@ -14,6 +14,9 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+
+
+
 Route::as('admin.')->group(function () {
     Route::group(['middleware' => ['isAdmin']], function () {
         Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
