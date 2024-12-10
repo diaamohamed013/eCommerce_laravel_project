@@ -28,7 +28,9 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 Route::as('site.')->group(function(){
     Route::middleware('auth')->group(function(){
-
+        Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+        Route::post('/place-order', [CartController::class, 'place_order'])->name('cart.place.order');
+        Route::get('/order/success/{order_number}', [CartController::class, 'orderSuccess'])->name('cart.order.success');
     });
     Route::get('/',[HomeController::class,'index'])->name('home');
     Route::get('home', [HomeController::class, 'index'])->name('home');
@@ -49,4 +51,5 @@ Route::as('site.')->group(function(){
     Route::delete('/cart/destroy', [CartController::class, 'remove_cart'])->name('cart.destroy');
     Route::post('/cart/apply-coupon', [CartController::class, 'apply_coupon_code'])->name('cart.coupon.apply');
     Route::delete('/cart/remove-coupon', [CartController::class, 'remove_coupon_code'])->name('cart.coupon.remove');
+
 });
