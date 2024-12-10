@@ -26,35 +26,38 @@
                             @if (Session::has('status'))
                                 <p class="alert alert-success">{{ Session::get('status') }}</p>
                             @endif
-                            <div class="wg-box mt-4" style="padding: 20px;">
-                                <h5>Update Order Status</h5>
-                                <form action="{{ route('admin.order.status.update') }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <input type="hidden" name="order_id" value="{{ $transaction->order->id }}" />
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <div class="select">
-                                                <select id="order_status" name="order_status" class="form-control">
-                                                    <option value="ordered"
-                                                        {{ $transaction->order->status == 'ordered' ? 'selected' : '' }}>
-                                                        Ordered
-                                                    </option>
-                                                    <option value="delivered"
-                                                        {{ $transaction->order->status == 'delivered' ? 'selected' : '' }}>
-                                                        Delivered</option>
-                                                    <option value="cancelled"
-                                                        {{ $transaction->order->status == 'cancelled' ? 'selected' : '' }}>
-                                                        cancelled</option>
-                                                </select>
+                            @if ($transaction->order->status != 'cancelled')
+                                <div class="wg-box mt-4" style="padding: 20px;">
+                                    <h5>Update Order Status</h5>
+                                    <form action="{{ route('admin.order.status.update') }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="order_id" value="{{ $transaction->order->id }}" />
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="select">
+                                                    <select id="order_status" name="order_status" class="form-control">
+                                                        <option value="ordered"
+                                                            {{ $transaction->order->status == 'ordered' ? 'selected' : '' }}>
+                                                            Ordered
+                                                        </option>
+                                                        <option value="delivered"
+                                                            {{ $transaction->order->status == 'delivered' ? 'selected' : '' }}>
+                                                            Delivered</option>
+                                                        <option value="cancelled"
+                                                            {{ $transaction->order->status == 'cancelled' ? 'selected' : '' }}>
+                                                            cancelled</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button type="submit"
+                                                    class="btn btn-primary tf-button w208">Update</button>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <button type="submit" class="btn btn-primary tf-button w208">Update</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+                                    </form>
+                                </div>
+                            @endif
                             <div class="card-body table-responsive">
                                 <table class="table table-bordered table-striped">
                                     <tr>
