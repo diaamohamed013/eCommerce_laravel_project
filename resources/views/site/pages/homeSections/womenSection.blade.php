@@ -20,11 +20,34 @@
                                 <div class="shop-pic ">
                                     <img src="{{ asset($product->image) }}" alt="{{ $product->title }}">
                                     <div class="shop-pic-icon">
-                                        <i class="fal fa-heart"></i>
+                                        <span class="wishlistIcon">
+                                            @if (Cart::instance('wishlist')->content()->where('id', $product->id)->count() > 0)
+                                                <a href="{{ route('site.wishlist.index') }}">
+                                                    <i class="fas fa-heart" style="color: #e7ab3c"></i>
+                                                </a>
+                                            @else
+                                                <form method="POST" action="{{ route('site.wishlist.store') }}"
+                                                    class="add-to-wishlist-form">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{ $product->id }}">
+                                                    <input type="hidden" name="stock_quantity" value="1">
+                                                    <input type="hidden" name="title" value="{{ $product->title }}">
+                                                    <input type="hidden" name="price"
+                                                        value="{{ $product->sale_percentage == '' ? $product->price : $product->sale_percentage }}">
+                                                    <button class="wishlistBtn btn bg-transparent outline-0 border-0"
+                                                        type="submit">
+                                                        <i class="fal fa-heart"
+                                                            style="color: #e7ab3c; font-size: 22px;"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        </span>
                                     </div>
-                                    <div class="shop-sale">
-                                        sale
-                                    </div>
+                                    @if (!empty($product->sale_percentage))
+                                        <div class="shop-sale">
+                                            sale
+                                        </div>
+                                    @endif
                                     <ul>
                                         <li class="cartIcon">
                                             @if (Cart::instance('cart')->content()->where('id', $product->id)->count() > 0)
