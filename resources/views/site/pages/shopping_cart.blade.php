@@ -163,7 +163,7 @@
                                         </span>
                                     </li>
                                 </ul>
-                                <a href="{{ route('site.cart.checkout') }}" class="proceed-btn">PROCEED TO CHECK OUT</a>
+                                <a href="{{route('site.cart.checkout')}}" class="proceed-btn">PROCEED TO CHECK OUT</a>
                             </div>
                         @else
                             <div class="carttotal">
@@ -187,7 +187,7 @@
                                         </span>
                                     </li>
                                 </ul>
-                                <a href="{{  route('site.cart.checkout') }}" class="proceed-btn">PROCEED TO CHECK OUT</a>
+                                <a href="{{route('site.cart.checkout')}}" class="proceed-btn">PROCEED TO CHECK OUT</a>
                             </div>
                         @endif
                     </div>

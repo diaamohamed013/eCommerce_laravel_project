@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\Site;
 
-use App\Http\Controllers\Controller;
-use App\Models\Coupon;
-use App\Models\Product;
-use App\Models\Address;
 use Carbon\Carbon;
+use App\Models\Order;
+use App\Models\Coupon;
+use App\Models\Address;
+use App\Models\Product;
+use App\Models\OrderItem;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Surfsidemedia\Shoppingcart\Facades\Cart;
 
 class CartController extends Controller
@@ -189,18 +193,142 @@ class CartController extends Controller
         return back()->with('success', 'Coupon has been removed!');
     }
 
-
     public function checkout()
     {
         if(!Auth::check()){
             return redirect()->route('login');
         }
-        
         $address = Address::where('user_id', Auth::user()->id)->first();
+        return view('site.pages.checkout', compact('address'));
+    }
 
-        $this->validateDiscounts();
-        $items = Cart::instance('cart')->content();
-        return view('site.pages.checkout', compact('address', 'items'));
+    public function place_order(Request $request)
+    {
+        
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+            'country' => 'required',
+            'city' => 'required',
+            'street_address' => 'required',
+            'state' => 'required',
+            'zip' => 'required',
+            'mode' => 'required|in:cod,card,stripe',
+        ]);
 
+       
+     $user_id = Auth::user()->id;
+     $address = Address::where('user_id', $user_id)->first();
+    
+     if(!$address){
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+            'country' => 'required',
+            'city' => 'required',
+            'street_address' => 'required',
+            'state' => 'required',
+            'zip' => 'required',
+            'mode' => 'required|in:cod,card,stripe',
+
+        ]);
+
+        $address = new Address();
+        $address->user_id = $user_id;
+        $address->name = $request->name;
+        $address->email = $request->email;
+        $address->phone = $request->phone;
+        $address->country = $request->country;
+        $address->city = $request->city;
+        $address->street_address = $request->street_address;
+        $address->state = $request->state;
+        $address->zip = $request->zip;
+        $address->save();
+     }
+
+     $this->setAmountForCheckout();
+
+     $order = new Order();
+     $order->user_id = $user_id;
+     $order->name = $request->name;
+     $order->email = $request->email;
+     $order->phone = $request->phone;
+     $order->country = $request->country;
+     $order->city = $request->city;
+     $order->street_address = $request->street_address;
+     $order->state = $request->state;
+     $order->zip = $request->zip;
+     $order->order_number = 'ORDER-' . mt_rand(100000000, 999999999);
+     $order->sub_total = Session::get('checkout')['subtotal'];
+     $order->tax = Session::get('checkout')['tax'];
+     $order->discount = Session::get('checkout')['discount'];
+     $order->total = Session::get('checkout')['total'];
+     $order->status = 'ordered';
+     $order->payment_status = 'pending';
+     $order->save();
+
+
+     foreach (Cart::instance('cart')->content() as $item) {
+        $orderItem = new OrderItem();
+        $orderItem->order_id = $order->id;
+        $orderItem->product_id = $item->id;
+        $orderItem->quantity = $item->qty;
+        $orderItem->price = $item->price;
+        $orderItem->save();
+     }
+
+     if($request->mode == 'card') {
+         //
+     }
+     elseif($request->mode == 'stripe') {
+         //
+     }
+     elseif($request->mode == 'cod') {
+        $transaction = new Transaction();
+        $transaction->order_id = $order->id;
+        $transaction->user_id = $user_id;
+        $transaction->mode = 'cod';
+        $transaction->status = 'pending';
+        $transaction->save();
+     }
+     Cart::instance('cart')->destroy();
+     Session::forget('checkout');
+     Session::forget('coupon');
+     Session::forget('discounts');
+     
+     return redirect()->route('site.cart.order.success', $order->order_number);
+    }
+
+    // handle empty cart 
+
+    public function setAmountForCheckout(){
+        if(Cart::instance('cart')->count() <= 0){
+            Session::forget('checkout');
+            return redirect()->route('site.shop');
+        }
+        if(Session::has('coupon')){
+            Session::put('checkout', [
+                'discount' => Session::get('discounts')['discount'],
+                'subtotal' => Session::get('discounts')['subtotal'],
+                'tax' => Session::get('discounts')['tax'],
+                'total' => Session::get('discounts')['total'],
+            ]);
+        }
+        else {
+            Session::put('checkout', [
+                'discount' => 0,
+                'subtotal' => Cart::instance('cart')->subtotal(),
+                'tax' => Cart::instance('cart')->tax(),
+                'total' => Cart::instance('cart')->total(),
+            ]);
+        }
+
+    }
+
+    public function orderSuccess(){
+        $order = Order::where('order_number', request()->order_number)->first();
+        return view('site.pages.order-success', compact('order'));
     }
 }

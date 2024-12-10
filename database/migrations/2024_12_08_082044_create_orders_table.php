@@ -13,20 +13,20 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone');
+            $table->string('country');
+            $table->text('city');  // Shipping address
+            $table->string('street_address');
+            $table->string('state');
+            $table->string('zip');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // User who placed the order
             $table->string('order_number')->unique();  // Unique order identifier
             $table->decimal('sub_total');
             $table->decimal('tax');
             $table->decimal('discount');
             $table->decimal('total');  // Total price of the order
-            $table->string('name');
-            $table->string('phone');
-            $table->text('locality');  // Shipping address
-            $table->string('city');
-            $table->string('state');
-            $table->string('zip');
-            $table->string('country');
-            $table->boolean('is_shipping_different')->default(false);
             $table->enum('status', ['ordered', 'delivered', 'cancelled'])->default('ordered');
             $table->date('delivery_date')->nullable();
             $table->date('cancelled_date')->nullable();
