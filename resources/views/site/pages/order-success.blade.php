@@ -13,7 +13,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="checkorder__content">
+                    <div class="checkorder__content p-5 shadow">
                         <h2>Thank you. Your order has been received.</h2>
                         <p>
                             Your order number is: <strong>{{ $order->id }}</strong>
@@ -22,16 +22,25 @@
                             You will receive an email confirmation shortly.
                         </p>
                         <p>
-                            {{ $order->created_at }}
+                            <span>Order Created Date: </span>
+                            <span>{{ $order->created_at }}</span>
                         </p>
                         <p>
-                            {{$order->transaction->mode}}
-                            <br>
-                            {{$order->transaction->transaction_id}}
-                            <br>
-                            {{$order->transaction->status}}
+                            <span>Payment Method: </span>
+                            <span>
+                                {{ $order->transaction->mode }}
+                            </span>
                         </p>
                         <p>
+                            {{ $order->transaction->transaction_id }}
+                        </p>
+                        <p>
+                            <span>Transaction Status: </span>
+                            <span>
+                                {{ $order->transaction->status }}
+                            </span>
+                        </p>
+                        <p class="text-center">
                             <a href="{{ route('site.home') }}" class="btn btn-primary">Back to Home</a>
                         </p>
                     </div>

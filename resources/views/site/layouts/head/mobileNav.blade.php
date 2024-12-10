@@ -7,16 +7,22 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="navbar-brand" href="{{ route('site.home') }}">
             <div class="shopping">
-                <i class="fal fa-heart ml-3">
-                    <span class="one">1</span>
-                </i>
-                <a class="btn1 viewCard text-dark" href="{{ route('site.cart.index') }}">
-                    <i class="fal fa-shopping-bag ml-3 mr-3">
-                        <span class="one cartCount">
-                            {{ Cart::instance('cart')->content()->count() }}
+                <a class="btn1 viewCard text-dark" href="{{ route('site.wishlist.index') }}">
+                    <i class="fal fa-heart ml-3">
+                        <span class="one wishlistCount">
+                            {{ Cart::instance('wishlist')->content()->count() }}
                         </span>
                     </i>
                 </a>
+                @auth
+                    <a class="btn1 viewCard text-dark" href="{{ route('site.cart.index') }}">
+                        <i class="fal fa-shopping-bag ml-3 mr-3">
+                            <span class="one cartCount">
+                                {{ Cart::instance('cart')->content()->count() }}
+                            </span>
+                        </i>
+                    </a>
+                @endauth
             </div>
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"

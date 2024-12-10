@@ -26,7 +26,7 @@
                                     @endcan
                                 </h4>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body table-responsive">
 
                                 <table class="table table-bordered table-striped">
                                     <thead>
@@ -54,12 +54,16 @@
                                                 <td>
                                                     @can('update user')
                                                         <a href="{{ url('users/' . $user->id . '/edit') }}"
-                                                            class="btn btn-success">Edit</a>
+                                                            class="btn text-success">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
                                                     @endcan
 
                                                     @can('delete user')
                                                         <a href="{{ url('users/' . $user->id . '/delete') }}"
-                                                            class="btn btn-danger mx-2">Delete</a>
+                                                            class="btn text-danger mx-2">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
                                                     @endcan
                                                 </td>
                                             </tr>

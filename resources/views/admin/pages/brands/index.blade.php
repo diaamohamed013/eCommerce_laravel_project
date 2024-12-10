@@ -42,14 +42,18 @@
                                                 <td>{{ $brand->name }}</td>
                                                 <td>
                                                         <a href="{{ route('admin.brands.edit', $brand->id) }}"
-                                                            class="btn btn-success">Edit</a>
+                                                            class="btn text-success">
+                                                            <i class="fa fa-edit"></i>
+                                                        </a>
                                                         <!-- <a href=""
                                                             class="btn btn-danger mx-2">Delete</a> -->
                                                         <form action="{{ route('admin.brands.destroy', $brand->id) }}"
                                                             method="POST" class="d-inline">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                                            <button type="submit" class="btn text-danger">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
                                                         </form>
 
                                                 </td>

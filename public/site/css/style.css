@@ -17,6 +17,7 @@ section.checkorder button.discountbtn {
     color: white;
     width: 100%;
 }
+
 .clr {
     clear: both;
 }
@@ -2540,6 +2541,16 @@ in CheckOut page , login page and shop page  */
     padding-left: 32px;
     cursor: pointer;
     text-transform: capitalize;
+}
+
+.checkorder__content {
+    color: #fff;
+    background: #333;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
 }
 
 .shop .color-item .item label {
