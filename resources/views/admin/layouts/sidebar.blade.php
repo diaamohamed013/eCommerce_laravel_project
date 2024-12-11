@@ -1,21 +1,14 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="{{ route('admin.dashboard') }}" class="brand-link">
-        <img src="{{ asset('admin') }}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
-            class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
-    </a>
+<aside class="main-sidebar sideBar elevation-4">
 
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset('admin') }}/dist/img/user2-160x160.jpg" class="img-circle elevation-2"
-                    alt="User Image">
+                <img src="{{ asset('admin') }}/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                <a href="{{ route('admin.dashboard') }}" class="d-block">{{ Auth::user()->name }}</a>
             </div>
         </div>
 
@@ -43,13 +36,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.products.create') }}" class="nav-link ml-3 @if (request()->is('products/create')) active @endif">
+                            <a href="{{ route('admin.products.create') }}"
+                                class="nav-link ml-3 @if (request()->is('products/create')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>New Product</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.products.index') }}" class="nav-link ml-3 @if (request()->is('products')) active @endif">
+                            <a href="{{ route('admin.products.index') }}"
+                                class="nav-link ml-3 @if (request()->is('products')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>All Products</p>
                             </a>
@@ -66,13 +61,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.coupons.create') }}" class="nav-link ml-3 @if (request()->is('coupons/create')) active @endif">
+                            <a href="{{ route('admin.coupons.create') }}"
+                                class="nav-link ml-3 @if (request()->is('coupons/create')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>New Coupon</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.coupons.index') }}" class="nav-link ml-3 @if (request()->is('coupons')) active @endif">
+                            <a href="{{ route('admin.coupons.index') }}"
+                                class="nav-link ml-3 @if (request()->is('coupons')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>All Coupons</p>
                             </a>
@@ -89,13 +86,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.categories.create') }}" class="nav-link ml-3 @if (request()->is('categories/create')) active @endif">
+                            <a href="{{ route('admin.categories.create') }}"
+                                class="nav-link ml-3 @if (request()->is('categories/create')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>New Category</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.categories.index') }}" class="nav-link ml-3 @if (request()->is('categories')) active @endif">
+                            <a href="{{ route('admin.categories.index') }}"
+                                class="nav-link ml-3 @if (request()->is('categories')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>All Categories</p>
                             </a>
@@ -112,13 +111,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.tags.create') }}" class="nav-link ml-3 @if (request()->is('tags/create')) active @endif">
+                            <a href="{{ route('admin.tags.create') }}"
+                                class="nav-link ml-3 @if (request()->is('tags/create')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>New Tag</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.tags.index') }}" class="nav-link ml-3 @if (request()->is('tags')) active @endif">
+                            <a href="{{ route('admin.tags.index') }}"
+                                class="nav-link ml-3 @if (request()->is('tags')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>All Tags</p>
                             </a>
@@ -135,13 +136,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.sizes.create') }}" class="nav-link ml-3 @if (request()->is('sizes/create')) active @endif">
+                            <a href="{{ route('admin.sizes.create') }}"
+                                class="nav-link ml-3 @if (request()->is('sizes/create')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>New Size</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.sizes.index') }}" class="nav-link ml-3 @if (request()->is('sizes')) active @endif">
+                            <a href="{{ route('admin.sizes.index') }}"
+                                class="nav-link ml-3 @if (request()->is('sizes')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>All Sizes</p>
                             </a>
@@ -158,13 +161,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.brands.create') }}" class="nav-link ml-3 @if (request()->is('brands/create')) active @endif">
+                            <a href="{{ route('admin.brands.create') }}"
+                                class="nav-link ml-3 @if (request()->is('brands/create')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>New Brand</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.brands.index') }}" class="nav-link ml-3 @if (request()->is('brands')) active @endif">
+                            <a href="{{ route('admin.brands.index') }}"
+                                class="nav-link ml-3 @if (request()->is('brands')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>All Brands</p>
                             </a>
@@ -172,7 +177,15 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.social.index') }}" class="nav-link @if (request()->is('social*')) active @endif">
+                    <a href="{{ route('admin.orders') }}"
+                        class="nav-link @if (request()->is('orders*')) active @endif">
+                        <i class="fas fa-briefcase nav-icon"></i>
+                        <p>Orders</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.social.index') }}"
+                        class="nav-link @if (request()->is('social*')) active @endif">
                         <i class="fas fa-share-alt nav-icon"></i>
                         <p>Social</p>
                     </a>
@@ -184,7 +197,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('permissions') }}" class="nav-link @if (request()->is('permission*')) active @endif">
+                    <a href="{{ url('permissions') }}"
+                        class="nav-link @if (request()->is('permission*')) active @endif">
                         <i class="far fa-bookmark nav-icon"></i>
                         <p>Permissions</p>
                     </a>

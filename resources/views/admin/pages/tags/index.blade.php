@@ -24,7 +24,7 @@
                                     </a>
                                 </h4>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body table-responsive">
 
                                 <table class="table table-bordered table-striped">
                                     <thead>
@@ -47,14 +47,18 @@
                                                 </td>
                                                 <td>
                                                     <a href="{{ route('admin.tags.edit', $tag->id) }}"
-                                                        class="btn btn-success">Edit</a>
+                                                        class="btn text-success">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
                                                     <!-- <a href=""
                                                                 class="btn btn-danger mx-2">Delete</a> -->
                                                     <form action="{{ route('admin.tags.destroy', $tag->id) }}"
                                                         method="POST" class="d-inline">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                        <button type="submit" class="btn text-danger">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
                                                     </form>
 
                                                 </td>

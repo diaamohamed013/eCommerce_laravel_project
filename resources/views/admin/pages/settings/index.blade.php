@@ -23,7 +23,7 @@
                                     </a>
                                 </h4>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body table-responsive">
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
@@ -51,14 +51,18 @@
                                                 <td>{{ $setting->youtube }}</td>
                                                 <td>
                                                     <a href="{{ route('admin.social.edit', $setting->id) }}"
-                                                        class="btn btn-success">Edit</a>
+                                                        class="btn text-success">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
                                                     <!-- <a href=""
                                                                 class="btn btn-danger mx-2">Delete</a> -->
                                                     <form action="{{ route('admin.social.destroy', $setting->id) }}"
                                                         method="POST" class="d-inline">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                        <button type="submit" class="btn text-danger">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
                                                     </form>
 
                                                 </td>

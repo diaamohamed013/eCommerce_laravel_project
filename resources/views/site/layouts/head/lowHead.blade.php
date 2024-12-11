@@ -11,7 +11,9 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-5">
                         <div class="cate">
-                            <a href="{{ route('site.shop') }}" class="btn text-left">all category</a>
+                            <span class="text-left">
+                                Find Your Product
+                            </span>
                         </div>
                     </div>
                     <div class="col-lg-8 col-md-7 col-sm-12 col-12">
@@ -29,12 +31,16 @@
                     </div>
                 </div>
             </div>
-            @auth
-                <div class="col-lg-3 col-md-3 text-center p-2">
-                    <div class="shopping">
+            <div class="col-lg-3 col-md-3 text-center p-2">
+                <div class="shopping">
+                    <a class="btn1 viewCard text-dark" href="{{ route('site.wishlist.index') }}">
                         <i class="fal fa-heart ml-3">
-                            <span class="one">1</span>
+                            <span class="one wishlistCount">
+                                {{ Cart::instance('wishlist')->content()->count() }}
+                            </span>
                         </i>
+                    </a>
+                    @auth
                         <a class="btn1 viewCard text-dark" href="{{ route('site.cart.index') }}">
                             <i class="fal fa-shopping-bag ml-3 mr-3">
                                 <span class="one cartCount">
@@ -42,9 +48,9 @@
                                 </span>
                             </i>
                         </a>
-                    </div>
+                    @endauth
                 </div>
-            @endauth
+            </div>
         </div>
     </div>
 </div>
