@@ -1,8 +1,8 @@
 @extends('site.master')
 
-@section('title', 'Chekout')
+@section('title', 'Success')
 
-@section('sub_page', 'Checkout')
+@section('sub_page', 'Success')
 
 @section('content')
 

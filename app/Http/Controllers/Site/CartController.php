@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Site;
 
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Coupon;
@@ -204,8 +205,8 @@ class CartController extends Controller
 
     public function place_order(Request $request)
     {
-        
-        $request->validate([
+        // Step 1: Validate the request
+        $validated = $request->validate([
             'name' => 'required',
             'email' => 'required|email',
             'phone' => 'required',
@@ -216,91 +217,153 @@ class CartController extends Controller
             'zip' => 'required',
             'mode' => 'required|in:cod,card,stripe',
         ]);
-
-       
-     $user_id = Auth::user()->id;
-     $address = Address::where('user_id', $user_id)->first();
     
-     if(!$address){
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-            'country' => 'required',
-            'city' => 'required',
-            'street_address' => 'required',
-            'state' => 'required',
-            'zip' => 'required',
-            'mode' => 'required|in:cod,card,stripe',
+        // Step 2: Get the current user
+        $user_id = Auth::user()->id;
+    
+        // Step 3: Check if the user already has an address
+        $address = Address::updateOrCreate(
+            ['user_id' => $user_id],  // condition
+            $validated + ['user_id' => $user_id]  // values to update/create
+        );
+    
+        // Step 5: Set the amount for checkout (possibly including discounts/taxes)
+        $this->setAmountForCheckout();
+    
+        // Step 4: Get checkout data from the session
+        $checkout = Session::get('checkout', []);
+        $subtotal = $checkout['subtotal'] ?? 0;
+        $tax = $checkout['tax'] ?? 0;
+        $discount = $checkout['discount'] ?? 0;
+        $total = $checkout['total'] ?? 0;
+    
+        // Handle case where checkout session data is missing
+        if ($subtotal == 0 || $total == 0) {
+            return redirect()->route('site.shop')->with('error', 'Your cart is empty. Please add items to your cart before proceeding.');
+        }
+    
+        // Step 6: Create the order
+        $order = new Order();
+        $order->user_id = $user_id;
+        $order->fill($validated); // Fill the order model with the request data
+        $order->order_number = 'ORDER-' . mt_rand(100000000, 999999999);
+        $order->sub_total = $subtotal;
+        $order->tax = $tax;
+        $order->discount = $discount;
+        $order->total = $total;
+        $order->status = 'ordered'; // You can define constants for statuses
+        $order->payment_status = 'pending'; // Payment pending status
+        $order->save();
+    
+        // Step 7: Save order items (using a loop or better, an Eloquent relationship)
+        $orderItems = Cart::instance('cart')->content()->map(function ($item) use ($order) {
+            return [
+                'order_id' => $order->id,
+                'product_id' => $item->id,
+                'quantity' => $item->qty,
+                'price' => $item->price,
+            ];
+        });
+    
+        // Bulk insert items
+        OrderItem::insert($orderItems->toArray());
+    
+        // Step 8: Handle payment modes
+        if ($request->mode === 'cod') {
+            $transaction = new Transaction([
+                'order_id' => $order->id,
+                'user_id' => $user_id,
+                'mode' => 'cod',
+                'status' => 'pending',
+            ]);
+            $transaction->save();
+    
+            // Step 9: Clear the cart and session data
+            Cart::instance('cart')->destroy();
+            Session::forget(['checkout', 'coupon', 'discounts']);
+    
+            // Step 10: Redirect to success page
+            return redirect()->route('site.cart.order.success', ['order_number' => $order->order_number]);
+        }
+        else if ($request->mode === 'stripe') {
+            // Create Stripe transaction record
+            $transaction = new Transaction([
+                'order_id' => $order->id,
+                'user_id' => $user_id,
+                'mode' => 'stripe',
+                'status' => 'pending',
+            ]);
+            $transaction->save();
+    
 
-        ]);
 
-        $address = new Address();
-        $address->user_id = $user_id;
-        $address->name = $request->name;
-        $address->email = $request->email;
-        $address->phone = $request->phone;
-        $address->country = $request->country;
-        $address->city = $request->city;
-        $address->street_address = $request->street_address;
-        $address->state = $request->state;
-        $address->zip = $request->zip;
-        $address->save();
-     }
+            try {
+                // Initialize Stripe client
+                $stripe = new \Stripe\StripeClient(config('stripe.stripe_sk'));
+    
+                $lineItems = $orderItems->map(function ($item) {
+                    $product = Product::find($item['product_id']);  // Get the product details
+                    if (!$product) {
+                        return null;  // Skip if product is not found
+                    }
+                
+                    $unitAmountInCents = intval($item['price'] * 100);  // Convert price to cents
+                    return [
+                        'price_data' => [
+                            'currency' => 'usd',  // Currency
+                            'product_data' => [
+                                'name' => $product->title,  // Product name
+                            ],
+                            'unit_amount' => $unitAmountInCents,  // Price per unit in cents
+                        ],
+                        'quantity' => $item['quantity'],  // Quantity of the product
+                    ];
+                })->filter()->values()->toArray();  // Added values() to reset array keys
 
-     $this->setAmountForCheckout();
-
-     $order = new Order();
-     $order->user_id = $user_id;
-     $order->name = $request->name;
-     $order->email = $request->email;
-     $order->phone = $request->phone;
-     $order->country = $request->country;
-     $order->city = $request->city;
-     $order->street_address = $request->street_address;
-     $order->state = $request->state;
-     $order->zip = $request->zip;
-     $order->order_number = 'ORDER-' . mt_rand(100000000, 999999999);
-     $order->sub_total = Session::get('checkout')['subtotal'];
-     $order->tax = Session::get('checkout')['tax'];
-     $order->discount = Session::get('checkout')['discount'];
-     $order->total = Session::get('checkout')['total'];
-     $order->status = 'ordered';
-     $order->payment_status = 'pending';
-     $order->save();
-
-
-     foreach (Cart::instance('cart')->content() as $item) {
-        $orderItem = new OrderItem();
-        $orderItem->order_id = $order->id;
-        $orderItem->product_id = $item->id;
-        $orderItem->quantity = $item->qty;
-        $orderItem->price = $item->price;
-        $orderItem->save();
-     }
-
-     if($request->mode == 'card') {
-         //
-     }
-     elseif($request->mode == 'stripe') {
-         //
-     }
-     elseif($request->mode == 'cod') {
-        $transaction = new Transaction();
-        $transaction->order_id = $order->id;
-        $transaction->user_id = $user_id;
-        $transaction->mode = 'cod';
-        $transaction->status = 'pending';
-        $transaction->save();
-     }
-     Cart::instance('cart')->destroy();
-     Session::forget('checkout');
-     Session::forget('coupon');
-     Session::forget('discounts');
-     
-     return redirect()->route('site.cart.order.success', $order->order_number);
+            
+    
+               
+                // Create Stripe Checkout Session
+                $checkout_session = $stripe->checkout->sessions->create([
+                    'payment_method_types' => ['card'],
+                    'line_items' => $lineItems,
+                    'mode' => 'payment',
+                    'success_url' => route('site.cart.order.success', ['order_number' => $order->order_number]),
+                    'cancel_url' => route('site.cart.order.cancel', ['order_number' => $order->order_number]),
+                    'metadata' => [
+                        'order_id' => $order->id,
+                        'order_number' => $order->order_number,
+                    ],
+                ]);
+                
+                // Update order with Stripe session ID
+                $order->stripe_session_id = $checkout_session->id;
+                $order->save();
+    
+                // Clear cart and session data
+                Cart::instance('cart')->destroy();
+                Session::forget(['checkout', 'coupon', 'discounts']);
+    
+                // Redirect to Stripe Checkout
+                return redirect($checkout_session->url);
+    
+            } catch (\Stripe\Exception\ApiErrorException $e) {
+                // Log the error
+                Log::error('Stripe Checkout Error: ' . $e->getMessage());
+                // Delete the order and transaction if Stripe fails
+                $transaction->delete();
+                $order->delete();
+    
+                // Redirect back with error
+                return redirect()->route('site.cart.checkout')
+                    ->with('error', 'Payment processing failed. Please try again.');
+            }
+        }
+    
+        // Fallback for other payment modes (if any)
+        return redirect()->route('site.cart.order.success', ['order_number' => $order->order_number]);
     }
-
+    
     // handle empty cart 
 
     public function setAmountForCheckout(){
@@ -330,5 +393,9 @@ class CartController extends Controller
     public function orderSuccess(){
         $order = Order::where('order_number', request()->order_number)->first();
         return view('site.pages.order-success', compact('order'));
+    }
+    public function orderCancel(){
+        $order = Order::where('order_number', request()->order_number)->first();
+        return view('site.pages.order-cancel', compact('order'));
     }
 }
