@@ -34,7 +34,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item @if (request()->is('home*')) active @endif">
+                <li class="nav-item @if (request()->is('home*') || request()->is('/')) active @endif">
                     <a class="nav-link" href="{{ route('site.home') }}">Home<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item @if (request()->is('shop*')) active @endif">

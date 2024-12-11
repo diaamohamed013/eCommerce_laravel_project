@@ -170,12 +170,14 @@
                             <form method="POST" action="{{ route('site.cart.store') }}"
                                                         class="add-to-cart-form">
                                                         @csrf
+                                                        @if(!empty($product->id))
                                                         <input type="hidden" name="id" value="${product.id}">
                                                         <input type="hidden" name="stock_quantity" value="1">
                                                         <input type="hidden" name="title" value="${product.title}">
                                                         <input type="hidden" name="price"
                                                             value="${product.sale_percentage == '' ? product.price : product.sale_percentage}">
-                                                        <button class="addCart btn p-0" type="submit">
+                                                        @endif
+                                                            <button class="addCart btn p-0" type="submit">
                                                             <i class="fas fa-shopping-cart text-white"></i>
                                                         </button>
                                                     </form>
@@ -245,12 +247,14 @@
                             <form method="POST" action="{{ route('site.wishlist.store') }}"
                                                         class="add-to-wishlist-form">
                                                         @csrf
+                                                        @if(!empty($product->id))
                                                         <input type="hidden" name="id" value="{{ $product->id }}">
                                                         <input type="hidden" name="stock_quantity" value="1">
                                                         <input type="hidden" name="title" value="{{ $product->title }}">
                                                         <input type="hidden" name="price"
                                                             value="{{ $product->sale_percentage == '' ? $product->price : $product->sale_percentage }}">
-                                                        <button class="wishlist btn bg-transparent outline-0 border-0" type="submit">
+                                                        @endif
+                                                            <button class="wishlist btn bg-transparent outline-0 border-0" type="submit">
                                                             <i class="fal fa-heart" style="color: #e7ab3c; font-size: 22px;"></i>
                                                         </button>
                                                     </form>

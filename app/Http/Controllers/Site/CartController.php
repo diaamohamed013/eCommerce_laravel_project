@@ -196,7 +196,7 @@ class CartController extends Controller
 
     public function checkout()
     {
-        if(!Auth::check()){
+        if (!Auth::check()) {
             return redirect()->route('login');
         }
         $address = Address::where('user_id', Auth::user()->id)->first();
@@ -217,31 +217,31 @@ class CartController extends Controller
             'zip' => 'required',
             'mode' => 'required|in:cod,card,stripe',
         ]);
-    
+
         // Step 2: Get the current user
         $user_id = Auth::user()->id;
-    
+
         // Step 3: Check if the user already has an address
         Address::updateOrCreate(
             ['user_id' => $user_id],  // condition
             $validated + ['user_id' => $user_id]  // values to update/create
         );
-    
+
         // Step 5: Set the amount for checkout (possibly including discounts/taxes)
         $this->setAmountForCheckout();
-    
+
         // Step 4: Get checkout data from the session
         $checkout = Session::get('checkout', []);
         $subtotal = $checkout['subtotal'] ?? 0;
         $tax = $checkout['tax'] ?? 0;
         $discount = $checkout['discount'] ?? 0;
         $total = $checkout['total'] ?? 0;
-    
+
         // Handle case where checkout session data is missing
         if ($subtotal == 0 || $total == 0) {
             return redirect()->route('site.shop')->with('error', 'Your cart is empty. Please add items to your cart before proceeding.');
         }
-    
+
         // Step 6: Create the order
         $order = new Order();
         $order->user_id = $user_id;
@@ -254,7 +254,7 @@ class CartController extends Controller
         $order->status = 'ordered'; // You can define constants for statuses
         $order->payment_status = 'pending'; // Payment pending status
         $order->save();
-    
+
         // Step 7: Save order items (using a loop or better, an Eloquent relationship)
         $orderItems = Cart::instance('cart')->content()->map(function ($item) use ($order) {
             return [
@@ -264,10 +264,10 @@ class CartController extends Controller
                 'price' => $item->price,
             ];
         });
-    
+
         // Bulk insert items
         OrderItem::insert($orderItems->toArray());
-    
+
         // Step 8: Handle payment modes
         if ($request->mode === 'cod') {
             $transaction = new Transaction([
@@ -277,15 +277,14 @@ class CartController extends Controller
                 'status' => 'pending',
             ]);
             $transaction->save();
-    
+
             // Step 9: Clear the cart and session data
             Cart::instance('cart')->destroy();
             Session::forget(['checkout', 'coupon', 'discounts']);
-    
+
             // Step 10: Redirect to success page
             return redirect()->route('site.cart.order.success', ['order_number' => $order->order_number]);
-        }
-        else if ($request->mode === 'stripe') {
+        } else if ($request->mode === 'stripe') {
             // Create Stripe transaction record
             $transaction = new Transaction([
                 'order_id' => $order->id,
@@ -294,19 +293,19 @@ class CartController extends Controller
                 'status' => 'pending',
             ]);
             $transaction->save();
-    
+
 
 
             try {
                 // Initialize Stripe client
                 $stripe = new \Stripe\StripeClient(config('stripe.stripe_sk'));
-    
+
                 $lineItems = $orderItems->map(function ($item) {
                     $product = Product::find($item['product_id']);  // Get the product details
                     if (!$product) {
                         return null;  // Skip if product is not found
                     }
-                
+
                     $unitAmountInCents = intval($item['price'] * 100);  // Convert price to cents
                     return [
                         'price_data' => [
@@ -320,9 +319,6 @@ class CartController extends Controller
                     ];
                 })->filter()->values()->toArray();  // Added values() to reset array keys
 
-            
-    
-               
                 // Create Stripe Checkout Session
                 $checkout_session = $stripe->checkout->sessions->create([
                     'payment_method_types' => ['card'],
@@ -335,51 +331,50 @@ class CartController extends Controller
                         'order_number' => $order->order_number,
                     ],
                 ]);
-                
+
                 // Update order with Stripe session ID
                 $order->stripe_session_id = $checkout_session->id;
                 $order->save();
-    
+
                 // Clear cart and session data
                 Cart::instance('cart')->destroy();
                 Session::forget(['checkout', 'coupon', 'discounts']);
-    
+
                 // Redirect to Stripe Checkout
                 return redirect($checkout_session->url);
-    
             } catch (\Stripe\Exception\ApiErrorException $e) {
                 // Log the error
                 Log::error('Stripe Checkout Error: ' . $e->getMessage());
                 // Delete the order and transaction if Stripe fails
                 $transaction->delete();
                 $order->delete();
-    
+
                 // Redirect back with error
                 return redirect()->route('site.cart.checkout')
                     ->with('error', 'Payment processing failed. Please try again.');
             }
         }
-    
+
         // Fallback for other payment modes (if any)
         return redirect()->route('site.cart.order.success', ['order_number' => $order->order_number]);
     }
-    
-    // handle empty cart 
 
-    public function setAmountForCheckout(){
-        if(Cart::instance('cart')->count() <= 0){
+    // handle empty cart
+
+    public function setAmountForCheckout()
+    {
+        if (Cart::instance('cart')->count() <= 0) {
             Session::forget('checkout');
             return redirect()->route('site.shop');
         }
-        if(Session::has('coupon')){
+        if (Session::has('coupon')) {
             Session::put('checkout', [
                 'discount' => Session::get('discounts')['discount'],
                 'subtotal' => Session::get('discounts')['subtotal'],
                 'tax' => Session::get('discounts')['tax'],
                 'total' => Session::get('discounts')['total'],
             ]);
-        }
-        else {
+        } else {
             Session::put('checkout', [
                 'discount' => 0,
                 'subtotal' => Cart::instance('cart')->subtotal(),
@@ -387,14 +382,15 @@ class CartController extends Controller
                 'total' => Cart::instance('cart')->total(),
             ]);
         }
-
     }
 
-    public function orderSuccess(){
+    public function orderSuccess()
+    {
         $order = Order::where('order_number', request()->order_number)->first();
         return view('site.pages.order-success', compact('order'));
     }
-    public function orderCancel(){
+    public function orderCancel()
+    {
         $order = Order::where('order_number', request()->order_number)->first();
         return view('site.pages.order-cancel', compact('order'));
     }

@@ -13,7 +13,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="checkorder__content">
+                    <div class="checkorder__content p-5 shadow">
                         <h2>Order Cancelled</h2>
                         <p>
                             <a href="{{ route('site.home') }}" class="btn btn-primary">Back to Home</a>

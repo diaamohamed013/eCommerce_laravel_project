@@ -38,7 +38,7 @@
                             </li>
                         </ul>
                     </div> --}}
-            <li class="nav-item1 @if (request()->is('home*')) active1 @endif">
+            <li class="nav-item1 @if (request()->is('home*') || request()->is('/')) active1 @endif">
                 <a class="nav-link" href="{{ route('site.home') }}">HOME <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item1 @if (request()->is('shop*')) active1 @endif">
