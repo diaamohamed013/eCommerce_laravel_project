@@ -9,25 +9,8 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'phone',
-        'email',
-        'country',
-        'city',
-        'street_address',
-        'state',
-        'zip',
-        'user_id',
-        'order_number',
-        'sub_total',
-        'tax',
-        'total',
-        'status',
-        'delivery_date',
-        'cancelled_date',
-        'payment_status',
-        'payment_gateway_reference'
+    protected $guarded = [
+        'id',
     ];
 
     public function user()
