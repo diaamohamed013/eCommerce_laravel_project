@@ -222,7 +222,7 @@ class CartController extends Controller
         $user_id = Auth::user()->id;
     
         // Step 3: Check if the user already has an address
-        $address = Address::updateOrCreate(
+        Address::updateOrCreate(
             ['user_id' => $user_id],  // condition
             $validated + ['user_id' => $user_id]  // values to update/create
         );
