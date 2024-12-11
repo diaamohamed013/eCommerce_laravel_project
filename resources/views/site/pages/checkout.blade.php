@@ -17,22 +17,6 @@
     <div class="col-lg-6 col-md-12">
         <div class="details">
             <h4 class="mb-5">Billing Details</h4>
-            @if ($address)
-                <div class="row">
-                    <div class="col-12">
-                        <div class="address-details">
-                            <p>{{ $address->name }}</p>
-                            <p>{{ $address->email }}</p>
-                            <p>{{ $address->phone }}</p>
-                            <p>{{ $address->country }}</p>
-                            <p>{{ $address->city }}</p>
-                            <p>{{ $address->street_address }}</p>
-                            <p>{{ $address->zip }}</p>
-                            <p>{{ $address->state }}</p>
-                        </div>
-                    </div>
-                </div>
-            @else
                 <div class="row">
                     <div class="col-lg-12 col-md-12">
                         <label>Full Name <span>*</span></label>
@@ -75,7 +59,6 @@
                         @error('zip') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                 </div>
-            @endif
         </div>
     </div>
 
