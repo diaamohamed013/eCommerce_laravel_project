@@ -51,5 +51,14 @@
             background: #e7ab3c;
             color: #fff !important;
         }
+        body.sidebar-mini thead {
+        background: #333333 !important;
+        color: #fff !important;
+        }
+    
+        .content-wrapper {
+            background-color: #fff !important;
+        }
+    
     </style>
 </head>

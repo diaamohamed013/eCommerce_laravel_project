@@ -18,7 +18,7 @@ class ShopController extends Controller
         $categories = Category::all();
         $tags = Tag::all();
         $sizes = Size::all();
-        $products = Product::with(['brand', 'category', 'tags','sizes'])->paginate(12);
+        $products = Product::with(['brand', 'category', 'tags','sizes'])->paginate(6);
         return view('site.pages.shop', compact('brands', 'categories','tags','products','sizes'));
     }
 

@@ -61,7 +61,7 @@
             </li>
             @auth
                 <li class="nav-item1 @if (request()->is('checkout*')) active1 @endif">
-                    <a class="nav-link" href="">CheckOut</a>
+                    <a class="nav-link" href="{{ route('site.cart.checkout') }}">CheckOut</a>
                 </li>
             @endauth
             @if (Auth::check() && Auth::user()->hasRole(['super-admin', 'admin']))
