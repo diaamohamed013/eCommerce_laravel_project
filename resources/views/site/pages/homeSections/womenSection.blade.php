@@ -50,24 +50,18 @@
                                     @endif
                                     <ul>
                                         <li class="cartIcon">
-                                            @if (Cart::instance('cart')->content()->where('id', $product->id)->count() > 0)
-                                                <a href="{{ route('site.cart.index') }}">
-                                                    <i class="fas fa-shopping-basket  text-white"></i>
-                                                </a>
-                                            @else
-                                                <form method="POST" action="{{ route('site.cart.store') }}"
-                                                    class="add-to-cart-form">
-                                                    @csrf
-                                                    <input type="hidden" name="id" value="{{ $product->id }}">
-                                                    <input type="hidden" name="stock_quantity" value="1">
-                                                    <input type="hidden" name="title" value="{{ $product->title }}">
-                                                    <input type="hidden" name="price"
-                                                        value="{{ $product->sale_percentage == '' ? $product->price : $product->sale_percentage }}">
-                                                    <button class="addCart btn p-0" type="submit">
-                                                        <i class="fas fa-shopping-cart text-white"></i>
-                                                    </button>
-                                                </form>
-                                            @endif
+                                            <form method="POST" action="{{ route('site.cart.store') }}"
+                                                class="add-to-cart-form">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $product->id }}">
+                                                <input type="hidden" name="stock_quantity" value="1">
+                                                <input type="hidden" name="title" value="{{ $product->title }}">
+                                                <input type="hidden" name="price"
+                                                    value="{{ $product->sale_percentage == '' ? $product->price : $product->sale_percentage }}">
+                                                <button class="addCart btn p-0" type="submit">
+                                                    <i class="fas fa-shopping-cart text-white"></i>
+                                                </button>
+                                            </form>
                                         </li>
                                         <li>
                                             <a href="{{ route('site.single-product', $product->id) }}">
