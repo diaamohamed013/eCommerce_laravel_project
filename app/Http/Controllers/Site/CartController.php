@@ -26,15 +26,41 @@ class CartController extends Controller
     }
 
     public function addToCart(Request $request)
-    {
-        Cart::instance('cart')->add($request->id, $request->title, $request->stock_quantity, $request->price)->associate('App\Models\Product');
-        // return redirect()->back();
+{
+    $product = Product::find($request->id); // Fetch the product
+
+    if (!$product) {
         return response()->json([
-            'status' => 'success',
-            'message' => 'Product added to cart successfully!',
-            'cartCount' => Cart::instance('cart')->content()->count(), // Optional: cart item count
-        ]);
+            'status' => 'error',
+            'message' => 'Product not found.',
+        ], 404);
     }
+
+    $currentCartItem = Cart::instance('cart')->content()->firstWhere('id', $request->id);
+    $currentCartQuantity = $currentCartItem ? $currentCartItem->qty : 0;
+    $requestedQuantity = $currentCartQuantity + $request->stock_quantity;
+
+    if ($requestedQuantity > $product->stock_quantity) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Requested quantity exceeds available stock. Only ' . ($product->stock_quantity - $currentCartQuantity) . ' item(s) left.',
+        ], 400);
+    }
+
+    Cart::instance('cart')->add(
+        $request->id,
+        $request->title,
+        $request->stock_quantity,
+        $request->price
+    )->associate('App\Models\Product');
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Product added to cart successfully!',
+        'cartCount' => Cart::instance('cart')->content()->count(),
+    ]);
+}
+
 
     public function increase_cart_qty($rowId)
     {
