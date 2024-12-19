@@ -2352,7 +2352,7 @@ of blog and shop pages */
     padding: 0px;
 }
 
-.shopcart input#number, .shopcart-qty input#number {
+.shopcart input.quantity-input, .shopcart-qty input#number {
     text-align: center;
     border: none;
     margin: 0px;

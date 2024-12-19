@@ -61,6 +61,33 @@ class CartController extends Controller
         ]);
     }
 
+    // public function increase_cart_qty($rowId)
+    // {
+    //     $product = Cart::instance('cart')->get($rowId);
+    //     $stock = $product->model->stock_quantity; // Assuming the model has a 'stock' field
+
+    //     // Check if stock is available
+    //     if ($stock <= 0) {
+    //         return redirect()->back()->with('error', 'Out of stock'); // Return error if out of stock
+    //     }
+
+    //     // If stock is available, increase the quantity
+    //     $qty = $product->qty + 1;
+
+    //     // Prevent going over stock
+    //     if ($qty > $stock) {
+    //         $qty = $stock; // Set quantity to max available stock
+    //         $message = "The quantity has been adjusted to the available stock of " . $stock . "."; // Custom message
+    //         Cart::instance('cart')->update($rowId, $qty); // Update the cart with adjusted quantity
+
+    //         // Redirect with a success message
+    //         return redirect()->back()->with('success', $message);
+    //     }
+    //     Cart::instance('cart')->update($rowId, $qty);
+    //     return redirect()->back();
+    // }
+
+
     public function increase_cart_qty($rowId)
     {
         $product = Cart::instance('cart')->get($rowId);
@@ -80,19 +107,62 @@ class CartController extends Controller
             $message = "The quantity has been adjusted to the available stock of " . $stock . "."; // Custom message
             Cart::instance('cart')->update($rowId, $qty); // Update the cart with adjusted quantity
 
-            // Redirect with a success message
-            return redirect()->back()->with('success', $message);
+            // Return JSON response with updated cart details
+            return response()->json([
+                'message' => $message,
+                'qty' => $qty,
+                'subtotal' => Cart::instance('cart')->subtotal(),
+                'tax' => Cart::instance('cart')->tax(),
+                'total' => Cart::instance('cart')->total()
+            ]);
         }
         Cart::instance('cart')->update($rowId, $qty);
-        return redirect()->back();
+        return response()->json([
+            'message' => 'Quantity updated successfully.',
+            'qty' => $qty,
+            'subtotal' => Cart::instance('cart')->subtotal(),
+            'tax' => Cart::instance('cart')->tax(),
+            'total' => Cart::instance('cart')->total()
+        ]);
     }
+
+    // public function decrease_cart_qty($rowId)
+    // {
+    //     $product = Cart::instance('cart')->get($rowId);
+    //     $qty = $product->qty - 1;
+    //     Cart::instance('cart')->update($rowId, $qty);
+    //     return redirect()->back();
+    // }
 
     public function decrease_cart_qty($rowId)
     {
+        // Retrieve the product in the cart by its row ID
         $product = Cart::instance('cart')->get($rowId);
+        $stock = $product->model->stock_quantity; // Assuming the model has a 'stock_quantity' field
+
+        // Check if the quantity is greater than 1 (cannot go below 1)
+        if ($product->qty <= 1) {
+            return redirect()->back()->with('error', 'Quantity cannot be less than 1.');
+        }
+
+        // Decrease the quantity by 1
         $qty = $product->qty - 1;
+
+        // Update the cart with the decreased quantity
         Cart::instance('cart')->update($rowId, $qty);
-        return redirect()->back();
+
+        // Calculate the updated cart totals
+        $subtotal = Cart::instance('cart')->subtotal();
+        $tax = Cart::instance('cart')->tax();
+        $total = Cart::instance('cart')->total();
+
+        // Return a response with the updated cart details
+        return response()->json([
+            'subtotal' => $subtotal,
+            'tax' => $tax,
+            'total' => $total,
+            'message' => 'Quantity decreased successfully.',
+        ]);
     }
 
     public function remove_item($rowId)

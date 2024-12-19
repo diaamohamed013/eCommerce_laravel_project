@@ -42,28 +42,34 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex justify-content-center align-items-center">
-                                                    <form style="width: auto; margin: unset;" method="POST"
+                                                    <form style="width: auto; margin: unset;" class="decrease-qty-form"
+                                                        method="POST"
                                                         action="{{ route('site.cart.qty.decrease', ['rowId' => $item->rowId]) }}">
                                                         @csrf
                                                         @method('PUT')
                                                         <div class="value-button decreaseQty" id="decrease"
-                                                            value="Decrease Value">-
+                                                            value="Decrease Value" data-row-id="{{ $item->rowId }}">-
                                                         </div>
                                                     </form>
-                                                    <input type="number" id="number" value="{{ $item->qty }}"
-                                                        min="1" name="stock_quantity" />
-                                                    <form style="width: auto; margin: unset;" method="POST"
-                                                        action="{{ route('site.cart.qty.increase', ['rowId' => $item->rowId]) }}">
+                                                    <input type="number" id="number-{{ $item->rowId }}"
+                                                        value="{{ $item->qty }}" min="1"
+                                                        max="{{ $item->model->stock_quantity }}" name="stock_quantity"
+                                                        class="quantity-input" />
+                                                    <form style="width: auto; margin: unset;" class="increase-qty-form"
+                                                        method="POST"
+                                                        action="{{ route('site.cart.qty.increase', ['rowId' => $item->rowId]) }}"
+                                                        data-row-id="{{ $item->rowId }}"
+                                                        data-stock="{{ $item->model->stock_quantity }}">
                                                         @csrf
                                                         @method('PUT')
                                                         <div class="value-button increaseQty" id="increase"
-                                                            value="Increase Value">+
+                                                            value="Increase Value" data-row-id="{{ $item->rowId }}">+
                                                         </div>
                                                     </form>
                                                 </div>
                                             </td>
                                             <td>
-                                                <span>${{ $item->subtotal() }}</span>
+                                                <span class="table_Subtotal">${{ $item->subtotal() }}</span>
                                             </td>
                                             <td>
                                                 <form class="remove-item-form" style="width: auto; border: unset;"
@@ -163,7 +169,7 @@
                                         </span>
                                     </li>
                                 </ul>
-                                <a href="{{route('site.cart.checkout')}}" class="proceed-btn">PROCEED TO CHECK OUT</a>
+                                <a href="{{ route('site.cart.checkout') }}" class="proceed-btn">PROCEED TO CHECK OUT</a>
                             </div>
                         @else
                             <div class="carttotal">
@@ -187,7 +193,7 @@
                                         </span>
                                     </li>
                                 </ul>
-                                <a href="{{route('site.cart.checkout')}}" class="proceed-btn">PROCEED TO CHECK OUT</a>
+                                <a href="{{ route('site.cart.checkout') }}" class="proceed-btn">PROCEED TO CHECK OUT</a>
                             </div>
                         @endif
                     </div>
@@ -218,14 +224,213 @@
 @push('js')
     <script>
         $(function() {
-            $('.decreaseQty').click(function() {
-                $(this).closest('form').submit();
+            // $('.decreaseQty').click(function() {
+            //     $(this).closest('form').submit();
+            // });
+
+            // $('.increaseQty').click(function() {
+            //     $(this).closest('form').submit();
+            // });
+        })
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Handle click event for the increase button
+            $('.increaseQty').on('click', function(e) {
+                e.preventDefault();
+
+                // Get the row ID and associated elements
+                const rowId = $(this).data('row-id');
+                const input = $(`#number-${rowId}`);
+                const form = $(this).closest('.increase-qty-form');
+                const url = form.attr('action');
+                const maxStock = parseInt(form.data('stock')); // Get the stock limit
+
+                // Get current quantity and increment it
+                let currentQty = parseInt(input.val());
+                if (isNaN(currentQty)) currentQty = 0; // Ensure currentQty is a number
+                const newQty = currentQty + 1;
+
+                // Prevent incrementing beyond the stock limit
+                if (newQty > maxStock) {
+                    Toastify({
+                        text: `Only ${maxStock} items are available in stock.`,
+                        className: "error",
+                        duration: 3000,
+                        newWindow: true,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: "left", // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        style: {
+                            background: "#dc3741",
+                        },
+                        onClick: function() {} // Callback after click
+                    }).showToast();
+                    return;
+                }
+
+                // Update the input field visually
+                input.val(newQty);
+
+                // Prepare the data for the AJAX request
+                const data = {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    _method: 'PUT',
+                    qty: newQty
+                };
+
+                input.val(newQty);
+                // Perform AJAX request
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: data,
+                    success: function(response) {
+                        $('#subtotal').text('$' + response.subtotal);
+                        $('.table_Subtotal').text('$' + response.subtotal);
+                        $('#vat').text('$' + response.tax);
+                        $('#total').text('$' + response.total);
+                        // Update the UI (e.g., cart quantity and messages)
+                        if (response.message) {
+                            Toastify({
+                                text: response.message,
+                                className: "success",
+                                duration: 3000,
+                                newWindow: true,
+                                close: true,
+                                gravity: "top", // `top` or `bottom`
+                                position: "left", // `left`, `center` or `right`
+                                stopOnFocus: true, // Prevents dismissing of toast on hover
+                                style: {
+                                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                                },
+                                onClick: function() {} // Callback after click
+                            }).showToast(); // Display a success message
+                        }
+                    },
+                    error: function(xhr) {
+                        // Revert input value to the previous quantity in case of error
+                        input.val(currentQty);
+                        // Handle error response
+                        Toastify({
+                            text: xhr.responseJSON?.error || 'Something went wrong!',
+                            className: "error",
+                            duration: 3000,
+                            newWindow: true,
+                            close: true,
+                            gravity: "top", // `top` or `bottom`
+                            position: "left", // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            style: {
+                                background: "#dc3741",
+                            },
+                            onClick: function() {} // Callback after click
+                        }).showToast();
+
+                    }
+                });
             });
 
-            $('.increaseQty').click(function() {
-                $(this).closest('form').submit();
-            });
-        })
+            $('.decreaseQty').on('click', function(e) {
+                e.preventDefault();
+
+                // Get the row ID and associated elements
+                const rowId = $(this).data('row-id');
+                const input = $(`#number-${rowId}`);
+                const form = $(this).closest('.decrease-qty-form');
+                const url = form.attr('action');
+                const minStock = 1; // Minimum quantity is 1 (can be adjusted if needed)
+
+                // Get current quantity and decrement it
+                let currentQty = parseInt(input.val());
+                if (isNaN(currentQty)) currentQty = 0; // Ensure currentQty is a number
+                const newQty = currentQty - 1;
+
+                // Prevent decrementing below the minimum value (1 in this case)
+                if (newQty < minStock) {
+                    Toastify({
+                        text: 'Quantity cannot be less than 1.',
+                        className: "error",
+                        duration: 3000,
+                        newWindow: true,
+                        close: true,
+                        gravity: "top", // `top` or `bottom`
+                        position: "left", // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        style: {
+                            background: "#dc3741",
+                        },
+                        onClick: function() {} // Callback after click
+                    }).showToast();
+                    return;
+                }
+
+                // Update the input field visually
+                input.val(newQty);
+
+                // Prepare the data for the AJAX request
+                const data = {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    _method: 'PUT',
+                    qty: newQty
+                };
+
+                // Perform AJAX request
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: data,
+                    success: function(response) {
+
+                        // Update cart summary dynamically
+                        $('#subtotal').text('$' + response.subtotal);
+                        $('#vat').text('$' + response.tax);
+                        $('#total').text('$' + response.total);
+                        $('.table_Subtotal').text('$' + response.subtotal);
+
+                        // Display success message if provided
+                        if (response.message) {
+                            Toastify({
+                                text: response.message,
+                                className: "success",
+                                duration: 3000,
+                                newWindow: true,
+                                close: true,
+                                gravity: "top", // `top` or `bottom`
+                                position: "left", // `left`, `center` or `right`
+                                stopOnFocus: true, // Prevents dismissing of toast on hover
+                                style: {
+                                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                                },
+                                onClick: function() {} // Callback after click
+                            }).showToast(); // Display a success message
+                        }
+                    },
+                    error: function(xhr) {
+                        // Revert input value to the previous quantity in case of error
+                        input.val(currentQty);
+
+                        // Handle error response
+                        Toastify({
+                            text: xhr.responseJSON?.error || 'Something went wrong!',
+                            className: "error",
+                            duration: 3000,
+                            newWindow: true,
+                            close: true,
+                            gravity: "top", // `top` or `bottom`
+                            position: "left", // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            style: {
+                                background: "#dc3741",
+                            },
+                            onClick: function() {} // Callback after click
+                        }).showToast();
+                    }
+                });
+            })
+        });
     </script>
 
     <script>
